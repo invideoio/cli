@@ -24,22 +24,13 @@ need curl
 need tar
 need uname
 
-case "$(uname -s)" in
-  Darwin) os="apple-darwin" ;;
-  Linux) os="unknown-linux-gnu" ;;
+case "$(uname -s)-$(uname -m)" in
+  Darwin-*) target="universal2-apple-darwin" ;;
+  Linux-x86_64 | Linux-amd64) target="x86_64-unknown-linux-gnu" ;;
+  Linux-aarch64 | Linux-arm64) target="aarch64-unknown-linux-gnu" ;;
+  Linux-*) fail "there is no build for $(uname -m)." ;;
   *) fail "this script is for macOS and Linux. On Windows, see $repo#install." ;;
 esac
-
-case "$(uname -m)" in
-  arm64 | aarch64) arch="aarch64" ;;
-  x86_64 | amd64) arch="x86_64" ;;
-  *) fail "there is no build for $(uname -m)." ;;
-esac
-
-# Rosetta reports x86_64 on Apple silicon; use the native build.
-if [ "$os" = "apple-darwin" ] && [ "$arch" = "x86_64" ] && [ "$(sysctl -n sysctl.proc_translated 2>/dev/null)" = "1" ]; then
-  arch="aarch64"
-fi
 
 if [ -n "${INVIDEO_VERSION:-}" ]; then
   version="${INVIDEO_VERSION#v}"
@@ -50,7 +41,6 @@ else
   [ -n "$version" ] && [ "$version" != "$location" ] || fail "couldn't find the latest release."
 fi
 
-target="$arch-$os"
 archive="invideo-$target.tar.gz"
 url="$repo/releases/download/v$version/$archive"
 
