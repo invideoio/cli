@@ -10,6 +10,12 @@ macOS and Linux:
 curl -fsSL https://raw.githubusercontent.com/invideoio/cli/main/install.sh | sh
 ```
 
+Or with Homebrew:
+
+```sh
+brew install invideoio/tap/invideo
+```
+
 Windows (PowerShell):
 
 ```powershell
