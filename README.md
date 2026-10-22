@@ -26,12 +26,6 @@ Windows (PowerShell):
 irm https://raw.githubusercontent.com/invideoio/cli/main/install.ps1 | iex
 ```
 
-From cmd.exe, or on a machine whose execution policy blocks scripts:
-
-```powershell
-powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/invideoio/cli/main/install.ps1 | iex"
-```
-
 The scripts download the latest release for your platform, check it against
 its SHA-256 checksum, and put `invideo` in your user's bin directory
 (`~/.local/bin` on macOS and Linux, `%LOCALAPPDATA%\invideo\bin` on Windows).
