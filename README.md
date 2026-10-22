@@ -26,43 +26,13 @@ Windows (PowerShell):
 irm https://raw.githubusercontent.com/invideoio/cli/main/install.ps1 | iex
 ```
 
-The scripts download the latest release for your platform, check it against
-its SHA-256 checksum, and put `invideo` in your user's bin directory
-(`~/.local/bin` on macOS and Linux, `%LOCALAPPDATA%\invideo\bin` on Windows).
-`INVIDEO_VERSION` picks a release and `INVIDEO_INSTALL_DIR` another directory.
-Read them first if you like: [`install.sh`](install.sh),
-[`install.ps1`](install.ps1).
-
-To install by hand, every [release](https://github.com/invideoio/cli/releases)
-has an archive per platform, each with a `.sha256` checksum:
-
-| Platform | Archive |
-| --- | --- |
-| macOS, Apple silicon | `invideo-aarch64-apple-darwin.tar.gz` |
-| macOS, Intel | `invideo-x86_64-apple-darwin.tar.gz` |
-| Linux, x86_64 | `invideo-x86_64-unknown-linux-gnu.tar.gz` |
-| Linux, ARM64 | `invideo-aarch64-unknown-linux-gnu.tar.gz` |
-| Windows, x86_64 | `invideo-x86_64-pc-windows-msvc.zip` |
-
-Check it works:
-
-```sh
-invideo version
-```
-
 ### Updating
-
-New commands arrive without an update: they live on the server. You only
-need a new `invideo` when the server says so, with a line on stderr at most
-once a day, or by refusing to run (exit 9) once this one is too old to read
-its answers. Then:
 
 ```sh
 invideo update
 ```
 
-It downloads the newest release, checks it against its SHA-256 checksum, and
-swaps itself for it.
+New commands arrive without updating; `invideo` tells you when it needs one.
 
 ## Quick start
 
