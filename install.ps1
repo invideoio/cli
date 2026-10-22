@@ -29,7 +29,7 @@ if ($env:INVIDEO_VERSION) {
     if (-not $version -or $version -eq $location) { throw "invideo: couldn't find the latest release." }
 }
 
-$archive = "invideo-x86_64-pc-windows-msvc.zip"
+$archive = "invideo-x86_64-pc-windows-gnu.zip"
 $url = "$repo/releases/download/v$version/$archive"
 $tmp = Join-Path ([System.IO.Path]::GetTempPath()) ("invideo-" + [System.Guid]::NewGuid())
 New-Item -ItemType Directory -Path $tmp | Out-Null
