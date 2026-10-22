@@ -4,8 +4,6 @@
   <img alt="invideo" src="assets/invideo-lockup-black.svg" width="320">
 </picture>
 
-# invideo CLI
-
 Edit professional NLE timelines, color correct footage, mix audio, and generate
 images, video and audio, from your terminal or your agent.
 
