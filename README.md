@@ -1,7 +1,7 @@
 <div align="center">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/invideo-editor-lockup-white.svg">
-  <img alt="invideo Editor" src="assets/invideo-editor-lockup-black.svg" width="320">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/invideo-lockup-white.svg">
+  <img alt="invideo" src="assets/invideo-lockup-black.svg" width="320">
 </picture>
 
 # invideo CLI
