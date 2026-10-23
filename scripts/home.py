@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Draws what a bare `invideo` shows on a terminal into assets/home.svg: the
 logo animating beside its header, then the help, as the server answers a CLI
-in iTerm2. The dots sit where iTerm2 draws them (Apple Braille on JetBrains
-Mono, 15 px), so the logo keeps its shape. Logo animation by da9ish.
+in Ghostty. The dots sit where Ghostty draws them, evenly through each cell of
+JetBrains Mono at 15 px, so the logo keeps its shape and its lines meet. Logo
+animation by da9ish.
 
 Needs the installed `invideo` (for its version). INVIDEO_HOST names another
 server. Run by scripts/commands.sh."""
@@ -17,11 +18,11 @@ from pathlib import Path
 HOST = os.environ.get("INVIDEO_HOST") or "https://mcp.invideo.io"
 OUT = Path(__file__).resolve().parent.parent / "assets" / "home.svg"
 
-# iTerm2's cell and braille dots, in px (scripts in the logo's source measured them).
+# Ghostty's cell and braille dots, in px: two across and four down, evenly.
 CELL_W, CELL_H, BASELINE = 9.0, 19.8, 15.3
-DOT_X = (456 / 2048 * 15, 944 / 2048 * 15)
-DOT_Y = tuple(BASELINE - y / 2048 * 15 for y in (1230, 740, 250, -240))
-DOT_R = 248 / 2048 * 15 / 2
+DOT_X = (CELL_W / 4, CELL_W * 3 / 4)
+DOT_Y = tuple(CELL_H * k / 8 for k in (1, 3, 5, 7))
+DOT_R = 1.3
 BITS = ((0x01, 0x08), (0x02, 0x10), (0x04, 0x20), (0x40, 0x80))
 PAD = 24
 # How long the logo rests before it plays again.
@@ -30,7 +31,7 @@ HOLD_MS = 3000
 version = subprocess.run(["invideo", "version"], capture_output=True, text=True, check=True).stdout.split()[-1]
 request = urllib.request.Request(
     f"{HOST}/cli/v1/run",
-    data=json.dumps({"argv": [], "terminal": "iterm", "version": version, "protocol": 2}).encode(),
+    data=json.dumps({"argv": [], "terminal": "ghostty-wezterm", "version": version, "protocol": 2}).encode(),
     headers={"content-type": "application/json", "x-invideo-cli-version": version},
 )
 with urllib.request.urlopen(request) as response:
