@@ -57,7 +57,9 @@ def at(col, row):
 
 def text(col, row, words, fill="#E8E8E8", weight=400):
     x, y = at(col, row)
-    return f'<text x="{x:.1f}" y="{y + BASELINE:.1f}" fill="{fill}" font-weight="{weight}">{escape(words)}</text>'
+    # Non-breaking spaces: an image's text collapses runs of ordinary ones.
+    words = escape(words).replace(" ", "\u00a0")
+    return f'<text x="{x:.1f}" y="{y + BASELINE:.1f}" fill="{fill}" font-weight="{weight}">{words}</text>'
 
 
 def path(lines):
@@ -102,7 +104,7 @@ help_lines = [text(0, 1 + rows + 1 + i, line) for i, line in enumerate(page) if 
 
 OUT.write_text(
     f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" '
-    'font-family="JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" xml:space="preserve">\n'
+    'font-family="JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15">\n'
     '<rect width="100%" height="100%" rx="10" fill="#161616"/>\n'
     + text(0, 0, "❯ invideo")
     + "\n"

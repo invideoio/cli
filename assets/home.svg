@@ -1,42 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="948" height="1177" viewBox="0 0 948 1177" font-family="JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" xml:space="preserve">
+<svg xmlns="http://www.w3.org/2000/svg" width="948" height="1177" viewBox="0 0 948 1177" font-family="JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15">
 <rect width="100%" height="100%" rx="10" fill="#161616"/>
-<text x="24.0" y="39.3" fill="#E8E8E8" font-weight="400">❯ invideo</text>
-<text x="357.0" y="118.5" fill="#FFFFFF" font-weight="700">invideo CLI 0.1.0</text>
-<text x="357.0" y="138.3" fill="#8A8A8A" font-weight="400">Press play on any idea.</text>
+<text x="24.0" y="39.3" fill="#E8E8E8" font-weight="400">❯ invideo</text>
+<text x="357.0" y="118.5" fill="#FFFFFF" font-weight="700">invideo CLI 0.1.0</text>
+<text x="357.0" y="138.3" fill="#8A8A8A" font-weight="400">Press play on any idea.</text>
 <text x="357.0" y="158.1" fill="#8A8A8A" font-weight="400">~/my-video</text>
-<text x="357.0" y="177.9" fill="#8A8A8A" font-weight="400">Not signed in · invideo auth login</text>
-<text x="24.0" y="375.9" fill="#E8E8E8" font-weight="400">Work with invideo from the command line.</text>
+<text x="357.0" y="177.9" fill="#8A8A8A" font-weight="400">Not signed in · invideo auth login</text>
+<text x="24.0" y="375.9" fill="#E8E8E8" font-weight="400">Work with invideo from the command line.</text>
 <text x="24.0" y="415.5" fill="#E8E8E8" font-weight="400">USAGE</text>
-<text x="24.0" y="435.3" fill="#E8E8E8" font-weight="400">  invideo &lt;command&gt; &lt;subcommand&gt; [&lt;url&gt;] [flags]</text>
-<text x="24.0" y="474.9" fill="#E8E8E8" font-weight="400">ACCOUNT COMMANDS</text>
-<text x="24.0" y="494.7" fill="#E8E8E8" font-weight="400">  auth:       Sign in and out</text>
-<text x="24.0" y="514.5" fill="#E8E8E8" font-weight="400">  workspace:  Your workspaces</text>
-<text x="24.0" y="534.3" fill="#E8E8E8" font-weight="400">  project:    List, create, show and rename projects</text>
-<text x="24.0" y="573.9" fill="#E8E8E8" font-weight="400">PROJECT COMMANDS</text>
-<text x="24.0" y="593.7" fill="#E8E8E8" font-weight="400">  notebook:   Pages, threads and sequences</text>
-<text x="24.0" y="613.5" fill="#E8E8E8" font-weight="400">  context:    The project&#x27;s entries and briefs</text>
-<text x="24.0" y="633.3" fill="#E8E8E8" font-weight="400">  edit:       Read, change, capture and export an edit</text>
-<text x="24.0" y="653.1" fill="#E8E8E8" font-weight="400">  branch:     An edit&#x27;s checkpoints and branches</text>
-<text x="24.0" y="672.9" fill="#E8E8E8" font-weight="400">  asset:      The project&#x27;s files: upload, add, look at</text>
-<text x="24.0" y="692.7" fill="#E8E8E8" font-weight="400">  gen:        Generate with a model</text>
-<text x="24.0" y="712.5" fill="#E8E8E8" font-weight="400">  export:     Export pages</text>
-<text x="24.0" y="732.3" fill="#E8E8E8" font-weight="400">  agent:      Agents in a project and their messages</text>
-<text x="24.0" y="771.9" fill="#E8E8E8" font-weight="400">ADDITIONAL COMMANDS</text>
-<text x="24.0" y="791.7" fill="#E8E8E8" font-weight="400">  library:    Search stock video, images, music and voices</text>
-<text x="24.0" y="811.5" fill="#E8E8E8" font-weight="400">  status:     Where generations, exports and uploads stand</text>
-<text x="24.0" y="831.3" fill="#E8E8E8" font-weight="400">  feedback:   Report a bug or ask for a feature</text>
-<text x="24.0" y="851.1" fill="#E8E8E8" font-weight="400">  update:     Update invideo to its latest release</text>
-<text x="24.0" y="890.7" fill="#E8E8E8" font-weight="400">HELP TOPICS</text>
-<text x="24.0" y="910.5" fill="#E8E8E8" font-weight="400">  arguments, urls, output, waiting, exit-codes</text>
+<text x="24.0" y="435.3" fill="#E8E8E8" font-weight="400">  invideo &lt;command&gt; &lt;subcommand&gt; [&lt;url&gt;] [flags]</text>
+<text x="24.0" y="474.9" fill="#E8E8E8" font-weight="400">ACCOUNT COMMANDS</text>
+<text x="24.0" y="494.7" fill="#E8E8E8" font-weight="400">  auth:       Sign in and out</text>
+<text x="24.0" y="514.5" fill="#E8E8E8" font-weight="400">  workspace:  Your workspaces</text>
+<text x="24.0" y="534.3" fill="#E8E8E8" font-weight="400">  project:    List, create, show and rename projects</text>
+<text x="24.0" y="573.9" fill="#E8E8E8" font-weight="400">PROJECT COMMANDS</text>
+<text x="24.0" y="593.7" fill="#E8E8E8" font-weight="400">  notebook:   Pages, threads and sequences</text>
+<text x="24.0" y="613.5" fill="#E8E8E8" font-weight="400">  context:    The project&#x27;s entries and briefs</text>
+<text x="24.0" y="633.3" fill="#E8E8E8" font-weight="400">  edit:       Read, change, capture and export an edit</text>
+<text x="24.0" y="653.1" fill="#E8E8E8" font-weight="400">  branch:     An edit&#x27;s checkpoints and branches</text>
+<text x="24.0" y="672.9" fill="#E8E8E8" font-weight="400">  asset:      The project&#x27;s files: upload, add, look at</text>
+<text x="24.0" y="692.7" fill="#E8E8E8" font-weight="400">  gen:        Generate with a model</text>
+<text x="24.0" y="712.5" fill="#E8E8E8" font-weight="400">  export:     Export pages</text>
+<text x="24.0" y="732.3" fill="#E8E8E8" font-weight="400">  agent:      Agents in a project and their messages</text>
+<text x="24.0" y="771.9" fill="#E8E8E8" font-weight="400">ADDITIONAL COMMANDS</text>
+<text x="24.0" y="791.7" fill="#E8E8E8" font-weight="400">  library:    Search stock video, images, music and voices</text>
+<text x="24.0" y="811.5" fill="#E8E8E8" font-weight="400">  status:     Where generations, exports and uploads stand</text>
+<text x="24.0" y="831.3" fill="#E8E8E8" font-weight="400">  feedback:   Report a bug or ask for a feature</text>
+<text x="24.0" y="851.1" fill="#E8E8E8" font-weight="400">  update:     Update invideo to its latest release</text>
+<text x="24.0" y="890.7" fill="#E8E8E8" font-weight="400">HELP TOPICS</text>
+<text x="24.0" y="910.5" fill="#E8E8E8" font-weight="400">  arguments, urls, output, waiting, exit-codes</text>
 <text x="24.0" y="950.1" fill="#E8E8E8" font-weight="400">FLAGS</text>
-<text x="24.0" y="969.9" fill="#E8E8E8" font-weight="400">  --help, --json, --tsv, --out &lt;dir&gt;, --wait, --timeout &lt;s&gt;</text>
+<text x="24.0" y="969.9" fill="#E8E8E8" font-weight="400">  --help, --json, --tsv, --out &lt;dir&gt;, --wait, --timeout &lt;s&gt;</text>
 <text x="24.0" y="1009.5" fill="#E8E8E8" font-weight="400">EXAMPLES</text>
-<text x="24.0" y="1029.3" fill="#E8E8E8" font-weight="400">  $ invideo project new --title &quot;Launch&quot;</text>
-<text x="24.0" y="1049.1" fill="#E8E8E8" font-weight="400">  $ invideo edit change &lt;edit-url&gt; --timeline T1 --token … --operations @ops.json</text>
-<text x="24.0" y="1068.9" fill="#E8E8E8" font-weight="400">  $ invideo gen run &lt;page-url&gt; --model veo-3 --max-credits 50 -i prompt=&quot;slow push&quot;</text>
-<text x="24.0" y="1088.7" fill="#E8E8E8" font-weight="400">  $ invideo status &lt;sequence-url&gt; --wait</text>
-<text x="24.0" y="1128.3" fill="#E8E8E8" font-weight="400">LEARN MORE</text>
-<text x="24.0" y="1148.1" fill="#E8E8E8" font-weight="400">  `invideo &lt;command&gt; &lt;subcommand&gt; --help` for a command&#x27;s flags; `invideo help &lt;topic&gt;` for a topic.</text>
+<text x="24.0" y="1029.3" fill="#E8E8E8" font-weight="400">  $ invideo project new --title &quot;Launch&quot;</text>
+<text x="24.0" y="1049.1" fill="#E8E8E8" font-weight="400">  $ invideo edit change &lt;edit-url&gt; --timeline T1 --token … --operations @ops.json</text>
+<text x="24.0" y="1068.9" fill="#E8E8E8" font-weight="400">  $ invideo gen run &lt;page-url&gt; --model veo-3 --max-credits 50 -i prompt=&quot;slow push&quot;</text>
+<text x="24.0" y="1088.7" fill="#E8E8E8" font-weight="400">  $ invideo status &lt;sequence-url&gt; --wait</text>
+<text x="24.0" y="1128.3" fill="#E8E8E8" font-weight="400">LEARN MORE</text>
+<text x="24.0" y="1148.1" fill="#E8E8E8" font-weight="400">  `invideo &lt;command&gt; &lt;subcommand&gt; --help` for a command&#x27;s flags; `invideo help &lt;topic&gt;` for a topic.</text>
 <g transform="scale(0.1)" stroke="#FFFFFF" stroke-width="18.2" stroke-linecap="round" fill="none">
 <path opacity="0" d="M1803 1923h0m36 0h0M1569 1959h0m90 0h0m54 0h0m90 0h0m36 0h0M1659 1995h0m54 0h0m36 0h0M1749 2085h0m144 0h0M1749 2121h0"><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.0046;0.0091" calcMode="discrete" dur="5469ms" repeatCount="indefinite"/></path>
 <path opacity="0" d="M1533 1887h0M1479 1923h0m324 0h0m36 0h0m144 0h0M1533 1959h0m36 0h0m54 0h0m36 0h0m54 0h0m36 0h0m54 0h0m36 0h0M1569 1995h0m54 0h0m36 0h0m54 0h0m36 0h0m54 0h0m90 0h0m126 0h0M1623 2085h0m36 0h0m54 0h0m36 0h0m54 0h0m90 0h0m36 0h0M1569 2121h0m54 0h0m36 0h0m54 0h0m36 0h0m90 0h0m54 0h0M1569 2157h0m54 0h0m90 0h0m36 0h0m54 0h0m90 0h0m36 0h0M1659 2193h0m180 0h0M1569 2283h0m90 0h0m90 0h0m54 0h0M1749 2319h0m54 0h0"><animate attributeName="opacity" values="0;1;0" keyTimes="0;0.0091;0.0137" calcMode="discrete" dur="5469ms" repeatCount="indefinite"/></path>
