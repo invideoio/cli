@@ -58,7 +58,7 @@ FLAGS
 EXAMPLES
   $ invideo project new --title "Launch"
   $ invideo edit change <edit-url> --timeline T1 --token … --operations @ops.json
-  $ invideo gen run <page-url> --model veo-3 --max-credits 50 -i prompt="slow push"
+  $ invideo gen run <page-url> --model seedance_2_5.r2v --max-credits 50 -i prompt="slow push"
   $ invideo status <sequence-url> --wait
 
 LEARN MORE
