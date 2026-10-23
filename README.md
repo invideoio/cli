@@ -74,7 +74,7 @@ Every answer gives the URLs to use next, and each one opens in invideo Editor.
 
 ## A real timeline, from a terminal
 
-| | |
+| Command | What it does |
 | --- | --- |
 | `edit show` | Tracks, clips and a state token |
 | `edit change` | A batch of operations, all or none |
