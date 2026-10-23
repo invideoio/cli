@@ -166,6 +166,9 @@ Flags: `invideo <command> <subcommand> --help`.
 
 ## Install
 
+One native binary, no runtime to install: npm and pip only deliver it. It runs
+on macOS (Apple silicon and Intel), Linux (x64 and arm64) and Windows (x64).
+
 macOS and Linux:
 
 ```sh
@@ -183,6 +186,25 @@ Windows (PowerShell):
 ```powershell
 irm https://raw.githubusercontent.com/invideoio/cli/main/install.ps1 | iex
 ```
+
+npm, or without installing:
+
+```sh
+npm install -g invideo
+npx invideo
+```
+
+Python (uv, pipx or pip):
+
+```sh
+uv tool install invideo
+pipx install invideo
+pip install invideo
+```
+
+The install scripts download the release for your platform and check its
+sha256 against the one published with it before installing; read
+[install.sh](install.sh) and [install.ps1](install.ps1) first if you like.
 
 ## Quick start
 
@@ -288,6 +310,14 @@ Each agent takes a name with `invideo agent register` and sends with
 invideo project list --json | jq -r '.projects[].url'
 ```
 
+## CLI or MCP?
+
+The same invideo is also an MCP server, `https://mcp.invideo.io/mcp`, for chat
+apps like Claude, ChatGPT and Cursor: connect it there and ask in words. The
+CLI is for shells, scripts and coding agents that run commands and want files on
+disk. Agents can read [agents.md](https://mcp.invideo.io/mcp/agents.md) for
+either.
+
 ## Agents
 
 Sign in once yourself, then let Claude Code, Codex or Cursor drive it. The
@@ -323,10 +353,14 @@ into your own agent instructions.
 ## Update and uninstall
 
 `invideo update` updates an install from the script, and tells you what to run
-for Homebrew (`brew upgrade invideo`).
+for the others: `brew upgrade invideo`, `npm install -g invideo@latest`,
+`uv tool upgrade invideo`, `pipx upgrade invideo` or
+`pip install --upgrade invideo`.
 
 To uninstall, run `invideo auth logout`, then delete `~/.local/bin/invideo`
-(`brew uninstall invideo` for Homebrew; `%LOCALAPPDATA%\invideo` on Windows).
+(`brew uninstall invideo` for Homebrew; `%LOCALAPPDATA%\invideo` on Windows;
+`npm uninstall -g invideo`, `uv tool uninstall invideo`, `pipx uninstall invideo`
+or `pip uninstall invideo` for those).
 
 ## Feedback
 
