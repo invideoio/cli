@@ -21,7 +21,49 @@ SOC 2 and GDPR compliant, ISO aligned.
 
 [![release](https://img.shields.io/github/v/release/invideoio/cli?label=release&color=F7F5F3&labelColor=161616)](https://github.com/invideoio/cli/releases/latest)
 
-<img alt="A bare invideo: the logo animating beside its header, then the help" src="assets/home.svg" width="948">
+```text
+❯ invideo
+Work with invideo from the command line.
+
+USAGE
+  invideo <command> <subcommand> [<url>] [flags]
+
+ACCOUNT COMMANDS
+  auth:       Sign in and out
+  workspace:  Your workspaces
+  project:    List, create, show and rename projects
+
+PROJECT COMMANDS
+  notebook:   Pages, threads and sequences
+  context:    The project's entries and briefs
+  edit:       Read, change, capture and export an edit
+  branch:     An edit's checkpoints and branches
+  asset:      The project's files: upload, add, look at
+  gen:        Generate with a model
+  export:     Export pages
+  agent:      Agents in a project and their messages
+
+ADDITIONAL COMMANDS
+  library:    Search stock video, images, music and voices
+  status:     Where generations, exports and uploads stand
+  feedback:   Report a bug or ask for a feature
+  update:     Update invideo to its latest release
+
+HELP TOPICS
+  arguments, urls, output, waiting, exit-codes
+
+FLAGS
+  --help, --json, --tsv, --out <dir>, --wait, --timeout <s>
+
+EXAMPLES
+  $ invideo project new --title "Launch"
+  $ invideo edit change <edit-url> --timeline T1 --token … --operations @ops.json
+  $ invideo gen run <page-url> --model seedance_2_5.r2v --max-credits 50 -i prompt="slow push"
+  $ invideo status <sequence-url> --wait
+
+LEARN MORE
+  `invideo <command> <subcommand> --help` for a command's flags; `invideo help <topic>` for a topic.
+```
 
 ## Commands
 
@@ -124,6 +166,9 @@ Flags: `invideo <command> <subcommand> --help`.
 
 ## Install
 
+One native binary, no runtime to install: npm and pip only deliver it. It runs
+on macOS (Apple silicon and Intel), Linux (x64 and arm64) and Windows (x64).
+
 macOS and Linux:
 
 ```sh
@@ -136,11 +181,24 @@ Homebrew:
 brew install invideoio/tap/invideo
 ```
 
-Windows (PowerShell):
+Windows, or anywhere with Node (npm, or without installing):
 
-```powershell
-irm https://raw.githubusercontent.com/invideoio/cli/main/install.ps1 | iex
+```sh
+npm install -g invideo
+npx invideo
 ```
+
+Python (uv, pipx or pip):
+
+```sh
+uv tool install invideo
+pipx install invideo
+pip install invideo
+```
+
+The install script downloads the release for your platform and checks its
+sha256 against the one published with it before installing; read
+[install.sh](install.sh) first if you like.
 
 ## Quick start
 
@@ -246,6 +304,14 @@ Each agent takes a name with `invideo agent register` and sends with
 invideo project list --json | jq -r '.projects[].url'
 ```
 
+## CLI or MCP?
+
+The same invideo is also an MCP server, `https://mcp.invideo.io/mcp`, for chat
+apps like Claude, ChatGPT and Cursor: connect it there and ask in words. The
+CLI is for shells, scripts and coding agents that run commands and want files on
+disk. Agents can read [agents.md](https://mcp.invideo.io/mcp/agents.md) for
+either.
+
 ## Agents
 
 Sign in once yourself, then let Claude Code, Codex or Cursor drive it. The
@@ -281,10 +347,14 @@ into your own agent instructions.
 ## Update and uninstall
 
 `invideo update` updates an install from the script, and tells you what to run
-for Homebrew (`brew upgrade invideo`).
+for the others: `brew upgrade invideo`, `npm install -g invideo@latest`,
+`uv tool upgrade invideo`, `pipx upgrade invideo` or
+`pip install --upgrade invideo`.
 
 To uninstall, run `invideo auth logout`, then delete `~/.local/bin/invideo`
-(`brew uninstall invideo` for Homebrew; `%LOCALAPPDATA%\invideo` on Windows).
+(`brew uninstall invideo` for Homebrew; `npm uninstall -g invideo`,
+`uv tool uninstall invideo`, `pipx uninstall invideo` or `pip uninstall invideo`
+for those).
 
 ## Feedback
 

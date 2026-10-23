@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 # Rewrites the command tree in README.md between the commands:begin/end markers
-# from the installed binary's help, and redraws assets/home.svg, the screen a
-# bare `invideo` shows (scripts/home.py). Run after a release: scripts/commands.sh
+# from the installed binary's help. Run after a release: scripts/commands.sh
 set -eu
 
 readme="$(dirname "$0")/../README.md"
@@ -39,5 +38,3 @@ awk -v block="$tmp" '
   !skip
 ' "$readme" > "$readme.new" && mv "$readme.new" "$readme"
 rm -f "$tmp"
-
-python3 "$(dirname "$0")/home.py"
