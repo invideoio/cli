@@ -138,7 +138,7 @@ Each agent takes a name with `invideo agent register` and sends with
 | `--json` | The answer as JSON on stdout |
 | `--wait` | Wait for a generation, export or upload to finish |
 | `--timeout <s>` | Stop waiting after s seconds (30 minutes by default) |
-| `--out <dir>` | Save files the answer carries into dir |
+| `--out <dir>` | Download the files an answer links to (captures, frames, generated media, exports) into dir |
 | `--as <name>` | The name an agent registered in the project |
 | `--help` | Help for any command |
 
