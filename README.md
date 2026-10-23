@@ -367,3 +367,10 @@ invideo team.
 - Talks only to invideo, over https.
 - Reads only files you name, and writes only into the `--out` directory you give.
 - Sends no telemetry, and runs nothing but your browser for sign-in.
+
+## License
+
+The installers, packaging scripts and docs in this repository are under the
+[Apache License 2.0](LICENSE). The invideo CLI binaries, in its releases and in
+the npm and PyPI packages, are proprietary; using them is governed by invideo's
+[terms and conditions](https://invideo.io/terms-and-conditions).
