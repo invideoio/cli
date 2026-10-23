@@ -119,7 +119,9 @@ Each agent takes a name with `invideo agent register` and sends with
 ## Features
 
 - **A real timeline.** Tracks, clips, trims, keyframes, effects, transitions and
-  so much more. Or write your own as shaders.
+  so much more.
+- **Custom effects and transitions.** Write your own as shaders and use them
+  like the built-in ones.
 - **Color and sound.** Grade footage and mix audio on the same timeline.
 - **Generate anything.** Images, video, voice and music from the models in
   `gen models`, with a credit cap per run (`--max-credits`).
