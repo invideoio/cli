@@ -51,7 +51,121 @@ ADDITIONAL COMMANDS
   status:     Where generations, exports and uploads stand
   feedback:   Report a bug or ask for a feature
   update:     Update invideo to its latest release
+
+HELP TOPICS
+  arguments, urls, output, waiting, exit-codes
+
+FLAGS
+  --help, --json, --out <dir>, --wait, --timeout <s>
+
+EXAMPLES
+  $ invideo project new --title "Launch"
+  $ invideo edit change <edit-url> --timeline T1 --token … --operations @ops.json
+  $ invideo gen run <page-url> --model veo-3 --max-credits 50 -i prompt="slow push"
+  $ invideo status <sequence-url> --wait
+
+LEARN MORE
+  `invideo <command> <subcommand> --help` for a command's flags; `invideo help <topic>` for a topic.
 ```
+
+## Commands
+
+<details>
+<summary>Every command and subcommand, from <code>--help</code></summary>
+
+<!-- commands:begin -->
+```text
+auth  Sign in and out
+  auth login                   Sign in, in the browser
+  auth logout                  Forget this machine's sign-in
+  auth status                  Who you are signed in as
+
+workspace  Your workspaces
+  workspace list               Your workspaces
+
+project  List, create, show and rename projects
+  project list <url>           Your projects, newest first
+  project new <url>            Start a project
+  project show <url>           A project: its notebook, context, briefs and newest files
+  project rename <url>         Rename what a URL names
+
+notebook  Pages, threads and sequences
+  notebook show <url>          A page, a thread or a sequence
+  notebook new-page <url>      A new notebook page
+  notebook mark <url>          Approve or reject a sequence
+
+context  The project's entries and briefs
+  context show <url>           A context entry or a brief
+  context write <url>          Replace a context entry or a brief
+  context edit <url>           Change part of a context entry or a brief
+  context new-brief <url>      Start a brief
+
+edit  Read, change, capture and export an edit
+  edit new <url>               A new edit in a project
+  edit change <url>            Change an edit: a list of operations, all or none
+  edit catalog <url>           The operations, effects and transitions an edit takes
+  edit export <url>            Render an edit to a file
+  edit leave <url>             Leave an edit (your cursor goes)
+  edit show <url>              An edit's tracks and clips, and its state token
+  edit inspect <url>           Objects of an edit by id, with every property you can change; a custom shader's source
+  edit check <url>             Check an edit for problems
+  edit capture <url>           Render frames of an edit as it looks now
+  edit point <url>             Point at a time or clips, for people watching
+
+branch  An edit's checkpoints and branches
+  branch list <url>            Branches and checkpoints, each branch with its URL
+  branch checkpoint <url>      Save a checkpoint on a branch; answers the edits it saved
+  branch restore <url>         Restore a branch to a checkpoint; answers the edits it changed and the backup
+  branch new <url>             Branch off now, or off a checkpoint with --checkpoint
+  branch edit-from-here <url>  Open a checkpoint for editing on a branch of its own
+  branch tag <url>             Tag a checkpoint
+  branch rename <url>          Rename a branch
+  branch archive <url>         Close a branch to edits; it keeps its history
+  branch unarchive <url>       Open an archived branch again
+  branch default <url>         Make a branch the default
+  branch final <url>           Declare a branch final
+
+asset  The project's files: upload, add, look at
+  asset upload <url>           Upload local files into a project
+  asset add <url>              Bring in media from a link or the stock library
+  asset show <url>             A project's files, a folder or a file
+  asset probe <url>            What a file is: streams, duration, size
+  asset grab <url>             Frames of a file at given times
+  asset filmstrip <url>        A filmstrip of a file
+  asset waveform <url>         A file's audio levels
+
+gen  Generate with a model
+  gen models <url>             Models you can generate with
+  gen model <url>              One model and its inputs
+  gen run <url>                Generate with a model; its inputs go as -i key=value
+
+export  Export pages
+  export add <url>             Add sequences to an export page
+  export edit <url>            Reorder, retitle or trim an export page
+  export share <url>           Share an export page
+
+agent  Agents in a project and their messages
+  agent list <url>             Every agent in a project
+  agent register <url>         Take a name in a project; pass it as --as <name> after
+  agent message <url>          Message an agent; its answer comes to your inbox
+  agent inbox <url>            Your unread messages
+
+library  Search stock video, images, music and voices
+  library search <url>         Search a stock library
+
+status  Where generations, exports and uploads stand
+
+feedback  Report a bug or ask for a feature
+  feedback bug <url>           Tell invideo something broke
+  feedback feature <url>       Ask invideo for something
+
+update  Update invideo to its latest release
+```
+<!-- commands:end -->
+
+Flags: `invideo <command> <subcommand> --help`.
+
+</details>
 
 ## Install
 
@@ -75,12 +189,24 @@ irm https://raw.githubusercontent.com/invideoio/cli/main/install.ps1 | iex
 
 ## Quick start
 
+A whole session, from sign-in to a file on disk:
+
 ```sh
 invideo auth login
-invideo project list
+invideo project new --title "Launch teaser"                 # answers the project's URL
+invideo asset upload <project-url> ./shots/*.mp4
+invideo edit new <project-url> --name "Teaser v1"            # answers the edit's URL
+invideo edit show <edit-url> --json                          # tracks, clips, state_token
+invideo edit change <edit-url> --timeline T1 --token <state_token> --operations @ops.json
+invideo edit check <edit-url>
+invideo edit capture <edit-url> --at 1,3.5 --out ./frames
+invideo edit export <edit-url> --format video --quality 1080 # answers the export's URL
+invideo status <export-url> --wait --out .
 ```
 
 Every answer gives the URLs to use next, and each one opens in invideo Editor.
+Signing in on a machine with no browser: `INVIDEO_NO_BROWSER=1 invideo auth login`
+prints a link and a code to enter on another device.
 
 ## A real timeline, from a terminal
 
@@ -107,7 +233,13 @@ invideo edit change <edit-url> --timeline T1 --token <token> --operations @ops.j
 ```
 
 All three land together, or none do. `invideo edit catalog <edit-url>` lists
-every operation, effect and transition.
+every operation, effect and transition; `--ops trim_clip` gives one op's fields.
+
+Every read answers a `state_token`, and every change takes it as `--token`. A
+change built on a stale token is refused with exit 3: read again and rebuild it.
+`--dry-run` checks the operations without applying them. `edit check` finds
+problems before you export; `edit inspect --ids C4` gives every property of an
+object you can change.
 
 ## Agents work together
 
@@ -133,13 +265,16 @@ Each agent takes a name with `invideo agent register` and sends with
 - **Custom effects and transitions.** Write your own as shaders and use them
   like the built-in ones.
 - **Color and sound.** Grade footage and mix audio on the same timeline.
-- **Generate anything.** Images, video, voice and music from the models in
-  `gen models`, with a credit cap per run (`--max-credits`).
+- **Generate anything.** Images, video, voice and music with 250+ models.
+  `gen models --query "lip sync"` finds one, `gen model --model <id>` lists its
+  inputs, `gen run <page-url> --model <id> -i prompt="…" --max-credits 50`
+  runs it; `--dry-run` prices it first.
 - **See what you made.** `asset grab`, `filmstrip` and `waveform` look inside
   any file.
 - **Stock built in.** `library search` finds video, images, music and voices.
-- **Branches and checkpoints.** Try a cut on a branch, checkpoint it, restore
-  it, or make it final.
+- **Branches and checkpoints.** `branch new` tries a cut on its own branch,
+  `branch checkpoint` saves it, `branch restore` goes back, `branch final`
+  declares it done.
 
 ## Flags
 
@@ -158,25 +293,35 @@ invideo project list --json | jq -r '.projects[].url'
 
 ## Agents
 
-Sign in once yourself, then let Claude Code, Codex or Cursor drive it:
+Sign in once yourself, then let Claude Code, Codex or Cursor drive it. The
+rules, in short; [AGENTS.md](AGENTS.md) has the whole contract, ready to paste
+into your own agent instructions.
 
-- `--json` answers go to stdout; notes go to stderr.
-- In a project, an agent registers a name (`invideo agent register`) and passes
-  `--as <name>`, or sets `INVIDEO_AS`. People watching see who did what.
-- Exit codes say what happened:
+- Pass `--json` on every command. The answer is one object on stdout, with
+  `next` (what to run now) and `notice`; errors are one object on stderr with
+  `code` and `message`.
+- `edit show` answers a `state_token`; pass it as `--token` on every change.
+  Exit 3 means it went stale: read again.
+- `--dry-run` before `edit change` and `gen run`; `--max-credits` on `gen run`.
+- Anything that starts a job answers at once with a URL: `status <url> --wait`
+  follows it, and `--out <dir>` saves what it made.
+- In a project, register a name (`invideo agent register --name scout`) and pass
+  `--as scout`, or set `INVIDEO_AS`. Unnamed commands act as
+  `invideo-cli-<username>`. People watching see who did what.
+- `invideo help <topic>` for arguments, urls, output, waiting and exit-codes.
 
-| Code | Meaning |
-| --- | --- |
-| 0 | ok |
-| 1 | failed |
-| 2 | usage error |
-| 3 | conflict: read again |
-| 4 | not signed in |
-| 5 | out of credits or quota |
-| 6 | moderation |
-| 7 | nothing ran: try again |
-| 8 | needs the person |
-| 9 | update required |
+| Code | Meaning | Do |
+| --- | --- | --- |
+| 0 | ok | |
+| 1 | failed | read `message` |
+| 2 | usage, or can't be done as asked | fix the command |
+| 3 | conflict: the edit changed since your read | `edit show` again, rebuild the change |
+| 4 | not signed in | `invideo auth login` |
+| 5 | a limit: credits or quota | stop; tell the person |
+| 6 | held by moderation | stop; tell the person |
+| 7 | transient: nothing ran | run the same command again |
+| 8 | needs the person's confirmation | stop; ask |
+| 9 | update required | `invideo update`, then again |
 
 ## Update and uninstall
 
