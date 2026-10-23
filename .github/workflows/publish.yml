@@ -1,0 +1,111 @@
+# Publishes each full release of this repo to PyPI and npm: the same binaries,
+# as wheels and as npm packages, built once and published by a job per
+# registry, so one failing doesn't hold the other back. Both registries trust
+# their job's environment here, so nothing holds a token. Each stays off until
+# its repo variable (PYPI, NPM) is true.
+name: publish
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: A released version, like 0.1.0
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    if: github.event_name == 'workflow_dispatch' || !github.event.release.prerelease
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - id: version
+        env:
+          VERSION: ${{ inputs.version || github.event.release.tag_name }}
+        run: echo "version=${VERSION#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Download the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          gh release download "v$VERSION" --pattern 'invideo-*' --dir dist
+          cd dist && for sum in *.sha256; do sha256sum -c "$sum"; done && rm *.sha256
+
+      # An npm package travels as its tarball: an artifact drops the binary's
+      # executable bit, the tarball keeps it.
+      - name: Package
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          python3 packaging/wheels.py "$VERSION" dist wheels
+          python3 packaging/npm.py "$VERSION" dist npm
+          mkdir npm-packs
+          for package in npm/*; do npm pack "$package" --pack-destination npm-packs; done
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: wheels
+          path: wheels/
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: npm
+          path: npm-packs/
+          if-no-files-found: error
+
+  pypi:
+    needs: package
+    if: vars.PYPI == 'true'
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: wheels
+          path: wheels
+
+      - run: pipx run --spec uv==0.13.5 uv publish --trusted-publishing always wheels/*
+
+  npm:
+    needs: package
+    if: vars.NPM == 'true'
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: npm
+          path: npm-packs
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing needs npm 11.5.1 or later. The platform packages go
+      # first, so the ones people install never point at a missing one.
+      - name: Publish
+        env:
+          VERSION: ${{ needs.package.outputs.version }}
+        run: |
+          set -euo pipefail
+          npm install -g npm@11.21.1
+          cd npm-packs
+          for package in invideo-ai-cli-darwin-* invideo-ai-cli-linux-* invideo-ai-cli-win32-* "invideo-ai-cli-$VERSION.tgz" "invideo-$VERSION.tgz"; do
+            npm publish "$package" --access public
+          done
