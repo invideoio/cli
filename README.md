@@ -181,13 +181,7 @@ Homebrew:
 brew install invideoio/tap/invideo
 ```
 
-Windows (PowerShell):
-
-```powershell
-irm https://raw.githubusercontent.com/invideoio/cli/main/install.ps1 | iex
-```
-
-npm, or without installing:
+Windows, or anywhere with Node (npm, or without installing):
 
 ```sh
 npm install -g invideo
@@ -202,9 +196,9 @@ pipx install invideo
 pip install invideo
 ```
 
-The install scripts download the release for your platform and check its
+The install script downloads the release for your platform and checks its
 sha256 against the one published with it before installing; read
-[install.sh](install.sh) and [install.ps1](install.ps1) first if you like.
+[install.sh](install.sh) first if you like.
 
 ## Quick start
 
@@ -358,9 +352,9 @@ for the others: `brew upgrade invideo`, `npm install -g invideo@latest`,
 `pip install --upgrade invideo`.
 
 To uninstall, run `invideo auth logout`, then delete `~/.local/bin/invideo`
-(`brew uninstall invideo` for Homebrew; `%LOCALAPPDATA%\invideo` on Windows;
-`npm uninstall -g invideo`, `uv tool uninstall invideo`, `pipx uninstall invideo`
-or `pip uninstall invideo` for those).
+(`brew uninstall invideo` for Homebrew; `npm uninstall -g invideo`,
+`uv tool uninstall invideo`, `pipx uninstall invideo` or `pip uninstall invideo`
+for those).
 
 ## Feedback
 
