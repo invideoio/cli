@@ -28,6 +28,7 @@ if ($env:INVIDEO_VERSION) {
     $version = ($location -split "/v")[-1]
     if (-not $version -or $version -eq $location) { throw "invideo: couldn't find the latest release." }
 }
+if ($version -notmatch '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?\z') { throw "invideo: `"$version`" isn't a version, like 0.1.0." }
 
 $archive = "invideo-x86_64-pc-windows-gnu.zip"
 $url = "$repo/releases/download/v$version/$archive"

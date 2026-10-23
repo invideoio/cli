@@ -169,7 +169,7 @@ Flags: `invideo <command> <subcommand> --help`.
 macOS and Linux:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/invideoio/cli/main/install.sh | sh
+curl -fsSL https://agents.invideo.io | sh
 ```
 
 Homebrew:
