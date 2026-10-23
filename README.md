@@ -65,6 +65,42 @@ LEARN MORE
   `invideo <command> <subcommand> --help` for a command's flags; `invideo help <topic>` for a topic.
 ```
 
+## Install
+
+One native binary, no runtime to install: npm and pip only deliver it. It runs
+on macOS (Apple silicon and Intel), Linux (x64 and arm64) and Windows (x64).
+
+macOS and Linux:
+
+```sh
+curl -fsSL https://agents.invideo.io | sh
+```
+
+Homebrew:
+
+```sh
+brew install invideoio/tap/invideo
+```
+
+Windows, or anywhere with Node (npm, or without installing):
+
+```sh
+npm install -g invideo
+npx invideo
+```
+
+Python (uv, pipx or pip):
+
+```sh
+uv tool install invideo
+pipx install invideo
+pip install invideo
+```
+
+The install script downloads the release for your platform and checks its
+sha256 against the one published with it before installing; read
+[install.sh](install.sh) first if you like.
+
 ## Commands
 
 <details>
@@ -163,42 +199,6 @@ update  Update invideo to its latest release
 Flags: `invideo <command> <subcommand> --help`.
 
 </details>
-
-## Install
-
-One native binary, no runtime to install: npm and pip only deliver it. It runs
-on macOS (Apple silicon and Intel), Linux (x64 and arm64) and Windows (x64).
-
-macOS and Linux:
-
-```sh
-curl -fsSL https://agents.invideo.io | sh
-```
-
-Homebrew:
-
-```sh
-brew install invideoio/tap/invideo
-```
-
-Windows, or anywhere with Node (npm, or without installing):
-
-```sh
-npm install -g invideo
-npx invideo
-```
-
-Python (uv, pipx or pip):
-
-```sh
-uv tool install invideo
-pipx install invideo
-pip install invideo
-```
-
-The install script downloads the release for your platform and checks its
-sha256 against the one published with it before installing; read
-[install.sh](install.sh) first if you like.
 
 ## Quick start
 
