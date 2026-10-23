@@ -7,8 +7,18 @@
   &nbsp;invideo CLI
 </h1>
 
-Edit professional NLE timelines, color correct footage, mix audio, and generate
-images, video and audio, from your terminal or your agent.
+invideo is a professional video editor you can drive from the terminal. Upload
+your footage, describe the edit, and your agent trims the clips, picks the best
+takes, grades the color, mixes the sound, adds captions and exports the finished
+video. All of it happens on a real NLE timeline. Open it in the browser to watch
+every change land and take over at any frame.
+
+Ask for effects, transitions and motion graphics by describing them or sharing a
+reference, or generate images, video, voice and music with 250+ AI models. Full
+color, audio and 3D tools. Scriptable from any shell or coding agent, with
+finished files downloaded straight to disk.
+
+SOC 2 and GDPR compliant, ISO aligned.
 
 [![release](https://img.shields.io/github/v/release/invideoio/cli?label=release&color=F7F5F3&labelColor=161616)](https://github.com/invideoio/cli/releases/latest)
 
