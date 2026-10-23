@@ -21,8 +21,9 @@ SOC 2 and GDPR compliant, ISO aligned.
 
 [![release](https://img.shields.io/github/v/release/invideoio/cli?label=release&color=F7F5F3&labelColor=161616)](https://github.com/invideoio/cli/releases/latest)
 
+<img alt="A bare invideo: the invideo logo animates beside its header" src="assets/home.svg" width="694">
+
 ```text
-❯ invideo
 Work with invideo from the command line.
 
 USAGE
