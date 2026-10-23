@@ -51,6 +51,21 @@ ADDITIONAL COMMANDS
   status:     Where generations, exports and uploads stand
   feedback:   Report a bug or ask for a feature
   update:     Update invideo to its latest release
+
+HELP TOPICS
+  arguments, urls, output, waiting, exit-codes
+
+FLAGS
+  --help, --json, --out <dir>, --wait, --timeout <s>
+
+EXAMPLES
+  $ invideo project new --title "Launch"
+  $ invideo edit change <edit-url> --timeline T1 --token … --operations @ops.json
+  $ invideo gen run <page-url> --model veo-3 --max-credits 50 -i prompt="slow push"
+  $ invideo status <sequence-url> --wait
+
+LEARN MORE
+  `invideo <command> <subcommand> --help` for a command's flags; `invideo help <topic>` for a topic.
 ```
 
 ## Install
@@ -75,12 +90,24 @@ irm https://raw.githubusercontent.com/invideoio/cli/main/install.ps1 | iex
 
 ## Quick start
 
+A whole session, from sign-in to a file on disk:
+
 ```sh
 invideo auth login
-invideo project list
+invideo project new --title "Launch teaser"                 # answers the project's URL
+invideo asset upload <project-url> ./shots/*.mp4
+invideo edit new <project-url> --name "Teaser v1"            # answers the edit's URL
+invideo edit show <edit-url> --json                          # tracks, clips, state_token
+invideo edit change <edit-url> --timeline T1 --token <state_token> --operations @ops.json
+invideo edit check <edit-url>
+invideo edit capture <edit-url> --at 1,3.5 --out ./frames
+invideo edit export <edit-url> --format video --quality 1080 # answers the export's URL
+invideo status <export-url> --wait --out .
 ```
 
 Every answer gives the URLs to use next, and each one opens in invideo Editor.
+Signing in on a machine with no browser: `INVIDEO_NO_BROWSER=1 invideo auth login`
+prints a link and a code to enter on another device.
 
 ## A real timeline, from a terminal
 
@@ -107,7 +134,13 @@ invideo edit change <edit-url> --timeline T1 --token <token> --operations @ops.j
 ```
 
 All three land together, or none do. `invideo edit catalog <edit-url>` lists
-every operation, effect and transition.
+every operation, effect and transition; `--ops trim_clip` gives one op's fields.
+
+Every read answers a `state_token`, and every change takes it as `--token`. A
+change built on a stale token is refused with exit 3: read again and rebuild it.
+`--dry-run` checks the operations without applying them. `edit check` finds
+problems before you export; `edit inspect --ids C4` gives every property of an
+object you can change.
 
 ## Agents work together
 
@@ -133,13 +166,16 @@ Each agent takes a name with `invideo agent register` and sends with
 - **Custom effects and transitions.** Write your own as shaders and use them
   like the built-in ones.
 - **Color and sound.** Grade footage and mix audio on the same timeline.
-- **Generate anything.** Images, video, voice and music from the models in
-  `gen models`, with a credit cap per run (`--max-credits`).
+- **Generate anything.** Images, video, voice and music with 250+ models.
+  `gen models --query "lip sync"` finds one, `gen model --model <id>` lists its
+  inputs, `gen run <page-url> --model <id> -i prompt="…" --max-credits 50`
+  runs it; `--dry-run` prices it first.
 - **See what you made.** `asset grab`, `filmstrip` and `waveform` look inside
   any file.
 - **Stock built in.** `library search` finds video, images, music and voices.
-- **Branches and checkpoints.** Try a cut on a branch, checkpoint it, restore
-  it, or make it final.
+- **Branches and checkpoints.** `branch new` tries a cut on its own branch,
+  `branch checkpoint` saves it, `branch restore` goes back, `branch final`
+  declares it done.
 
 ## Flags
 
@@ -158,25 +194,35 @@ invideo project list --json | jq -r '.projects[].url'
 
 ## Agents
 
-Sign in once yourself, then let Claude Code, Codex or Cursor drive it:
+Sign in once yourself, then let Claude Code, Codex or Cursor drive it. The
+rules, in short; [AGENTS.md](AGENTS.md) has the whole contract, ready to paste
+into your own agent instructions.
 
-- `--json` answers go to stdout; notes go to stderr.
-- In a project, an agent registers a name (`invideo agent register`) and passes
-  `--as <name>`, or sets `INVIDEO_AS`. People watching see who did what.
-- Exit codes say what happened:
+- Pass `--json` on every command. The answer is one object on stdout, with
+  `next` (what to run now) and `notice`; errors are one object on stderr with
+  `code` and `message`.
+- `edit show` answers a `state_token`; pass it as `--token` on every change.
+  Exit 3 means it went stale: read again.
+- `--dry-run` before `edit change` and `gen run`; `--max-credits` on `gen run`.
+- Anything that starts a job answers at once with a URL: `status <url> --wait`
+  follows it, and `--out <dir>` saves what it made.
+- In a project, register a name (`invideo agent register --name scout`) and pass
+  `--as scout`, or set `INVIDEO_AS`. Unnamed commands act as
+  `invideo-cli-<username>`. People watching see who did what.
+- `invideo help <topic>` for arguments, urls, output, waiting and exit-codes.
 
-| Code | Meaning |
-| --- | --- |
-| 0 | ok |
-| 1 | failed |
-| 2 | usage error |
-| 3 | conflict: read again |
-| 4 | not signed in |
-| 5 | out of credits or quota |
-| 6 | moderation |
-| 7 | nothing ran: try again |
-| 8 | needs the person |
-| 9 | update required |
+| Code | Meaning | Do |
+| --- | --- | --- |
+| 0 | ok | |
+| 1 | failed | read `message` |
+| 2 | usage, or can't be done as asked | fix the command |
+| 3 | conflict: the edit changed since your read | `edit show` again, rebuild the change |
+| 4 | not signed in | `invideo auth login` |
+| 5 | a limit: credits or quota | stop; tell the person |
+| 6 | held by moderation | stop; tell the person |
+| 7 | transient: nothing ran | run the same command again |
+| 8 | needs the person's confirmation | stop; ask |
+| 9 | update required | `invideo update`, then again |
 
 ## Update and uninstall
 
