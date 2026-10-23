@@ -14,6 +14,35 @@ images, video and audio, from your terminal or your agent.
 
 </div>
 
+```text
+❯ invideo
+Work with invideo from the command line.
+
+USAGE
+  invideo <command> <subcommand> [<url>] [flags]
+
+ACCOUNT COMMANDS
+  auth:       Sign in and out
+  workspace:  Your workspaces
+  project:    List, create, show and rename projects
+
+PROJECT COMMANDS
+  notebook:   Pages, threads and sequences
+  context:    The project's entries and briefs
+  edit:       Read, change, capture and export an edit
+  branch:     An edit's checkpoints and branches
+  asset:      The project's files: upload, add, look at
+  gen:        Generate with a model
+  export:     Export pages
+  agent:      Agents in a project and their messages
+
+ADDITIONAL COMMANDS
+  library:    Search stock video, images, music and voices
+  status:     Where generations, exports and uploads stand
+  feedback:   Report a bug or ask for a feature
+  update:     Update invideo to its latest release
+```
+
 ## Install
 
 macOS and Linux:
@@ -38,57 +67,67 @@ irm https://raw.githubusercontent.com/invideoio/cli/main/install.ps1 | iex
 
 ```sh
 invideo auth login
-invideo project new --title "Product teaser"
-invideo asset upload <project-url> ./shots/*.mp4
-invideo edit new <project-url> --name "Teaser v1"
-invideo edit show <edit-url>
-invideo edit change <edit-url> --timeline T1 --token <token> --operations @ops.json
-invideo edit capture <edit-url> --at 1,3.5 --out ./frames
-invideo edit export <edit-url> --format video --quality 1080 --wait --out .
+invideo project list
 ```
 
 Every answer gives the URLs to use next, and each one opens in invideo Editor.
 
+## A real timeline, from a terminal
+
+| | |
+| --- | --- |
+| `edit show` | Tracks, clips and a state token |
+| `edit change` | A batch of operations, all or none |
+| `edit capture` | See the frames before you export |
+| `edit export` | A video, or a Premiere, Final Cut or DaVinci project |
+
+```sh
+invideo edit change <edit-url> --timeline T1 --token <token> --operations @ops.json
+```
+
+```json
+[
+  { "op": "trim_clip", "clip": "C4", "edge": "tail",
+    "from_f": 240, "to_f": 180, "mode": "close_gap", "linked": true },
+  { "op": "add_transition", "type": "cross_zoom",
+    "left_clip": "C4", "right_clip": "C5", "in_f": 6, "out_f": 6 },
+  { "op": "add_text", "track": "V3", "text": "launch day",
+    "start_f": 0, "end_f": 90 }
+]
+```
+
+All three land together, or none do. `invideo edit catalog <edit-url>` lists
+every operation, effect and transition.
+
+## Agents work together
+
+Any number of agents, on any number of machines, work in one project and
+message each other; invideo's own agents answer too.
+
+```text
+❯ invideo agent inbox <project-url>
+claude-code@laptop   I'm on the music bed. Can someone tighten the intro?
+codex@desktop        On it. Intro down to 6s on branch intro-tight.
+invideo              Added captions to intro-tight, matched the brand font.
+claude-code@studio   Looks good, checkpointing it as v3.
+codex@render-box     Exporting v3 at 1080p.
+```
+
+Each agent takes a name with `invideo agent register` and sends with
+`invideo agent message`.
+
 ## Features
 
 - **A real timeline.** Tracks, clips, trims, keyframes, effects, transitions and
-  so much more, changed in one `edit change` that applies all or nothing. Or
-  write your own as shaders.
+  so much more. Or write your own as shaders.
 - **Color and sound.** Grade footage and mix audio on the same timeline.
 - **Generate anything.** Images, video, voice and music from the models in
   `gen models`, with a credit cap per run (`--max-credits`).
-- **See what you made.** `edit capture` renders frames of the edit as it is now;
-  `asset grab`, `filmstrip` and `waveform` look inside any file.
+- **See what you made.** `asset grab`, `filmstrip` and `waveform` look inside
+  any file.
 - **Stock built in.** `library search` finds video, images, music and voices.
 - **Branches and checkpoints.** Try a cut on a branch, checkpoint it, restore
   it, or make it final.
-- **Work alongside people.** Every change shows live in invideo Editor; agents take
-  a name, point at clips and message each other.
-- **Export anywhere.** Render a video, its sound or a still, or hand the edit
-  to Premiere, Final Cut or DaVinci as a project.
-
-## Commands
-
-| Command | What it does |
-| --- | --- |
-| `auth` | Sign in and out |
-| `workspace` | Your workspaces |
-| `project` | List, create, show and rename projects |
-| `notebook` | Pages, threads and sequences |
-| `context` | The project's entries and briefs |
-| `edit` | Read, change, capture and export an edit |
-| `branch` | An edit's checkpoints and branches |
-| `asset` | The project's files: upload, add, look at |
-| `gen` | Generate with a model |
-| `export` | Export pages |
-| `agent` | Agents in a project and their messages |
-| `library` | Search stock video, images, music and voices |
-| `status` | Where generations, exports and uploads stand |
-| `feedback` | Report a bug or ask for a feature |
-| `update` | Update invideo to its latest release |
-
-`invideo help` lists them; `invideo help <command> <subcommand>` shows a
-command's flags and an example.
 
 ## Flags
 
