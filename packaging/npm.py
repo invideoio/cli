@@ -2,9 +2,9 @@
 
     python3 packaging/npm.py 0.1.0 dist npm
 
-A package per platform holds its binary; `@invideo-ai/cli` and `invideo`
-depend on all of them as optional dependencies, so npm installs only the one
-for the machine, and run it through `invideo.js`.
+A package per platform holds its binary; `invideo` depends on all of them as
+optional dependencies, so npm installs only the one for the machine, and runs
+it through `invideo.js`.
 """
 
 import json
@@ -27,7 +27,7 @@ PLATFORMS = {
 }
 
 # The packages people install; both run the same binaries.
-LAUNCHERS = ["@invideo-ai/cli", "invideo"]
+LAUNCHERS = ["invideo"]
 
 
 def binary(archive):
