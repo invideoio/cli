@@ -68,6 +68,105 @@ LEARN MORE
   `invideo <command> <subcommand> --help` for a command's flags; `invideo help <topic>` for a topic.
 ```
 
+## Commands
+
+<details>
+<summary>Every command and subcommand, from <code>--help</code></summary>
+
+<!-- commands:begin -->
+```text
+auth  Sign in and out
+  auth login                   Sign in, in the browser
+  auth logout                  Forget this machine's sign-in
+  auth status                  Who you are signed in as
+
+workspace  Your workspaces
+  workspace list               Your workspaces
+
+project  List, create, show and rename projects
+  project list <url>           Your projects, newest first
+  project new <url>            Start a project
+  project show <url>           A project: its notebook, context, briefs and newest files
+  project rename <url>         Rename what a URL names
+
+notebook  Pages, threads and sequences
+  notebook show <url>          A page, a thread or a sequence
+  notebook new-page <url>      A new notebook page
+  notebook mark <url>          Approve or reject a sequence
+
+context  The project's entries and briefs
+  context show <url>           A context entry or a brief
+  context write <url>          Replace a context entry or a brief
+  context edit <url>           Change part of a context entry or a brief
+  context new-brief <url>      Start a brief
+
+edit  Read, change, capture and export an edit
+  edit new <url>               A new edit in a project
+  edit change <url>            Change an edit: a list of operations, all or none
+  edit catalog <url>           The operations, effects and transitions an edit takes
+  edit export <url>            Render an edit to a file
+  edit leave <url>             Leave an edit (your cursor goes)
+  edit show <url>              An edit's tracks and clips, and its state token
+  edit inspect <url>           Objects of an edit by id, with every property you can change; a custom shader's source
+  edit check <url>             Check an edit for problems
+  edit capture <url>           Render frames of an edit as it looks now
+  edit point <url>             Point at a time or clips, for people watching
+
+branch  An edit's checkpoints and branches
+  branch list <url>            Branches and checkpoints, each branch with its URL
+  branch checkpoint <url>      Save a checkpoint on a branch; answers the edits it saved
+  branch restore <url>         Restore a branch to a checkpoint; answers the edits it changed and the backup
+  branch new <url>             Branch off now, or off a checkpoint with --checkpoint
+  branch edit-from-here <url>  Open a checkpoint for editing on a branch of its own
+  branch tag <url>             Tag a checkpoint
+  branch rename <url>          Rename a branch
+  branch archive <url>         Close a branch to edits; it keeps its history
+  branch unarchive <url>       Open an archived branch again
+  branch default <url>         Make a branch the default
+  branch final <url>           Declare a branch final
+
+asset  The project's files: upload, add, look at
+  asset upload <url>           Upload local files into a project
+  asset add <url>              Bring in media from a link or the stock library
+  asset show <url>             A project's files, a folder or a file
+  asset probe <url>            What a file is: streams, duration, size
+  asset grab <url>             Frames of a file at given times
+  asset filmstrip <url>        A filmstrip of a file
+  asset waveform <url>         A file's audio levels
+
+gen  Generate with a model
+  gen models <url>             Models you can generate with
+  gen model <url>              One model and its inputs
+  gen run <url>                Generate with a model; its inputs go as -i key=value
+
+export  Export pages
+  export add <url>             Add sequences to an export page
+  export edit <url>            Reorder, retitle or trim an export page
+  export share <url>           Share an export page
+
+agent  Agents in a project and their messages
+  agent list <url>             Every agent in a project
+  agent register <url>         Take a name in a project; pass it as --as <name> after
+  agent message <url>          Message an agent; its answer comes to your inbox
+  agent inbox <url>            Your unread messages
+
+library  Search stock video, images, music and voices
+  library search <url>         Search a stock library
+
+status  Where generations, exports and uploads stand
+
+feedback  Report a bug or ask for a feature
+  feedback bug <url>           Tell invideo something broke
+  feedback feature <url>       Ask invideo for something
+
+update  Update invideo to its latest release
+```
+<!-- commands:end -->
+
+Flags: `invideo <command> <subcommand> --help`.
+
+</details>
+
 ## Install
 
 macOS and Linux:
