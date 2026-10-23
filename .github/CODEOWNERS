@@ -1,4 +1,4 @@
 # Every change needs a review from one of these owners before it can merge.
 # A merge to main ships to everyone who installs with
 # `curl -fsSL https://agents.invideo.io | sh`.
-* @ojaskavathe @jawadsh123
+* @ojaskavathe @jawadsh123 @rakshans1 @rajrajhans
