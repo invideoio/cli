@@ -16,7 +16,7 @@ import tarfile
 import zipfile
 from pathlib import Path
 
-SUMMARY = "Edit professional NLE timelines, color correct footage, mix audio, and generate images, video and audio."
+SUMMARY = "Professional video editor and 250+ AI models, from the terminal"
 
 # Archive target -> wheel platform tags.
 PLATFORMS = {

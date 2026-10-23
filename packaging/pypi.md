@@ -1,7 +1,7 @@
 # invideo CLI
 
-Edit professional NLE timelines, color correct footage, mix audio, and generate
-images, video and audio, from your terminal or your agent.
+invideo is a professional video editor you can drive from the terminal or your
+agent, with 250+ AI models for images, video, voice and music.
 
 ```sh
 uv tool install invideo     # or: pipx install invideo

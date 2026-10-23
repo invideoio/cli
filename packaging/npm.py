@@ -14,7 +14,7 @@ import tarfile
 import zipfile
 from pathlib import Path
 
-DESCRIPTION = "Edit professional NLE timelines, color correct footage, mix audio, and generate images, video and audio."
+DESCRIPTION = "Professional video editor and 250+ AI models, from the terminal"
 REPOSITORY = {"type": "git", "url": "git+https://github.com/invideoio/cli.git"}
 HERE = Path(__file__).parent
 
