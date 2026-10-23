@@ -1,4 +1,3 @@
-<div align="center">
 <h1>
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/invideo-symbol-white.svg">
@@ -21,8 +20,6 @@ finished files downloaded straight to disk.
 SOC 2 and GDPR compliant, ISO aligned.
 
 [![release](https://img.shields.io/github/v/release/invideoio/cli?label=release&color=F7F5F3&labelColor=161616)](https://github.com/invideoio/cli/releases/latest)
-
-</div>
 
 ```text
 ❯ invideo
