@@ -1,11 +1,11 @@
 <div align="center">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/invideo-lockup-white.svg">
-  <img alt="invideo" src="assets/invideo-lockup-black.svg" width="320">
-</picture>
-
-<br>
-<br>
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/invideo-symbol-white.svg">
+    <img alt="" src="assets/invideo-symbol-black.svg" height="40" align="absmiddle">
+  </picture>
+  &nbsp;invideo CLI
+</h1>
 
 Edit professional NLE timelines, color correct footage, mix audio, and generate
 images, video and audio, from your terminal or your agent.
@@ -34,16 +34,17 @@ Windows (PowerShell):
 irm https://raw.githubusercontent.com/invideoio/cli/main/install.ps1 | iex
 ```
 
-`invideo update` keeps it current; it tells you when you need to.
-
 ## Quick start
 
 ```sh
 invideo auth login
 invideo project new --title "Product teaser"
 invideo asset upload <project-url> ./shots/*.mp4
-invideo edit new <project-url> --name "Cut 1"
+invideo edit new <project-url> --name "Teaser v1"
 invideo edit show <edit-url>
+invideo edit change <edit-url> --timeline T1 --token <token> --operations @ops.json
+invideo edit capture <edit-url> --at 1,3.5 --out ./frames
+invideo edit export <edit-url> --format video --quality 1080 --wait --out .
 ```
 
 Every answer gives the URLs to use next, and each one opens in invideo Editor.
@@ -63,17 +64,52 @@ Every answer gives the URLs to use next, and each one opens in invideo Editor.
   it, or make it final.
 - **Work alongside people.** Every change shows live in invideo Editor; agents take
   a name, point at clips and message each other.
-- **Export and share.** Render a file with `edit export --wait --out .`, or
-  share an export page.
+- **Export anywhere.** Render a video, its sound or a still, or hand the edit
+  to Premiere, Final Cut or DaVinci as a project.
 
-`invideo help` lists everything; `invideo <command> <subcommand> --help` shows a
-command's flags.
+## Commands
+
+| Command | What it does |
+| --- | --- |
+| `auth` | Sign in and out |
+| `workspace` | Your workspaces |
+| `project` | List, create, show and rename projects |
+| `notebook` | Pages, threads and sequences |
+| `context` | The project's entries and briefs |
+| `edit` | Read, change, capture and export an edit |
+| `branch` | An edit's checkpoints and branches |
+| `asset` | The project's files: upload, add, look at |
+| `gen` | Generate with a model |
+| `export` | Export pages |
+| `agent` | Agents in a project and their messages |
+| `library` | Search stock video, images, music and voices |
+| `status` | Where generations, exports and uploads stand |
+| `feedback` | Report a bug or ask for a feature |
+| `update` | Update invideo to its latest release |
+
+`invideo help` lists them; `invideo help <command> <subcommand>` shows a
+command's flags and an example.
+
+## Flags
+
+| Flag | What it does |
+| --- | --- |
+| `--json` | The answer as JSON on stdout |
+| `--wait` | Wait for a generation, export or upload to finish |
+| `--timeout <s>` | Stop waiting after s seconds (30 minutes by default) |
+| `--out <dir>` | Save files the answer carries into dir |
+| `--as <name>` | The name an agent registered in the project |
+| `--help` | Help for any command |
+
+```sh
+invideo project list --json | jq -r '.projects[].url'
+```
 
 ## Agents
 
 Sign in once yourself, then let Claude Code, Codex or Cursor drive it:
 
-- `--json` prints the answer as JSON on stdout; notes go to stderr.
+- `--json` answers go to stdout; notes go to stderr.
 - In a project, an agent registers a name (`invideo agent register`) and passes
   `--as <name>`, or sets `INVIDEO_AS`. People watching see who did what.
 - Exit codes say what happened:
@@ -90,6 +126,19 @@ Sign in once yourself, then let Claude Code, Codex or Cursor drive it:
 | 7 | nothing ran: try again |
 | 8 | needs the person |
 | 9 | update required |
+
+## Update and uninstall
+
+`invideo update` updates an install from the script, and tells you what to run
+for Homebrew (`brew upgrade invideo`).
+
+To uninstall, run `invideo auth logout`, then delete `~/.local/bin/invideo`
+(`brew uninstall invideo` for Homebrew; `%LOCALAPPDATA%\invideo` on Windows).
+
+## Feedback
+
+`invideo feedback bug` and `invideo feedback feature` go straight to the
+invideo team.
 
 ## Security
 
