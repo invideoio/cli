@@ -53,7 +53,7 @@ Homebrew:
 brew install invideoio/tap/invideo
 ```
 
-Cross-platform (incl. Windows) — npm:
+npm, cross-platform (incl. Windows):
 
 ```sh
 npm install -g invideo
