@@ -91,10 +91,25 @@ release. If the folder isn't on your `PATH`, the script says so. Read
 
 Other ways deliver the same binary. Use one when the script can't run:
 
+Homebrew:
+
 ```sh
 brew install invideoio/tap/invideo
-npm install -g invideo        # or without installing: npx invideo
-uv tool install invideo       # or: pipx install invideo, pip install invideo
+```
+
+Cross-platform (incl. Windows) — npm:
+
+```sh
+npm install -g invideo
+npx invideo                   # without installing
+```
+
+Python (uv, pipx or pip):
+
+```sh
+uv tool install invideo
+pipx install invideo
+pip install invideo
 ```
 
 - Homebrew fails with "Permission denied" when its taps are read-only. Use the
