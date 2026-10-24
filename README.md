@@ -21,50 +21,6 @@ SOC 2 and GDPR compliant, ISO aligned.
 
 [![release](https://img.shields.io/github/v/release/invideoio/cli?label=release&color=F7F5F3&labelColor=161616)](https://github.com/invideoio/cli/releases/latest)
 
-```text
-❯ invideo
-Work with invideo from the command line.
-
-USAGE
-  invideo <command> <subcommand> [<url>] [flags]
-
-ACCOUNT COMMANDS
-  auth:       Sign in and out
-  workspace:  Your workspaces
-  project:    List, create, show and rename projects
-
-PROJECT COMMANDS
-  notebook:   Pages, threads and sequences
-  context:    The project's entries and briefs
-  edit:       Read, change, capture and export an edit
-  branch:     An edit's checkpoints and branches
-  asset:      The project's files: upload, add, look at
-  gen:        Generate with a model
-  export:     Export pages
-  agent:      Agents in a project and their messages
-
-ADDITIONAL COMMANDS
-  library:    Search stock video, images, music and voices
-  status:     Where generations, exports and uploads stand
-  feedback:   Report a bug or ask for a feature
-  update:     Update invideo to its latest release
-
-HELP TOPICS
-  arguments, urls, output, waiting, exit-codes
-
-FLAGS
-  --help, --json, --tsv, --out <dir>, --wait, --timeout <s>
-
-EXAMPLES
-  $ invideo project new --title "Launch"
-  $ invideo edit change <edit-url> --timeline T1 --token … --operations @ops.json
-  $ invideo gen run <page-url> --model seedance_2_5.r2v --max-credits 50 -i prompt="slow push"
-  $ invideo status <sequence-url> --wait
-
-LEARN MORE
-  `invideo <command> <subcommand> --help` for a command's flags; `invideo help <topic>` for a topic.
-```
-
 ## Install
 
 One native binary, no runtime to install: npm and pip only deliver it. It runs
@@ -123,6 +79,50 @@ Agents: run the install script yourself, after the person says yes once. Use
 another way only if it fails.
 
 ## Commands
+
+```text
+❯ invideo
+Work with invideo from the command line.
+
+USAGE
+  invideo <command> <subcommand> [<url>] [flags]
+
+ACCOUNT COMMANDS
+  auth:       Sign in and out
+  workspace:  Your workspaces
+  project:    List, create, show and rename projects
+
+PROJECT COMMANDS
+  notebook:   Pages, threads and sequences
+  context:    The project's entries and briefs
+  edit:       Read, change, capture and export an edit
+  branch:     An edit's checkpoints and branches
+  asset:      The project's files: upload, add, look at
+  gen:        Generate with a model
+  export:     Export pages
+  agent:      Agents in a project and their messages
+
+ADDITIONAL COMMANDS
+  library:    Search stock video, images, music and voices
+  status:     Where generations, exports and uploads stand
+  feedback:   Report a bug or ask for a feature
+  update:     Update invideo to its latest release
+
+HELP TOPICS
+  arguments, urls, output, waiting, exit-codes
+
+FLAGS
+  --help, --json, --tsv, --out <dir>, --wait, --timeout <s>
+
+EXAMPLES
+  $ invideo project new --title "Launch"
+  $ invideo edit change <edit-url> --timeline T1 --token … --operations @ops.json
+  $ invideo gen run <page-url> --model seedance_2_5.r2v --max-credits 50 -i prompt="slow push"
+  $ invideo status <sequence-url> --wait
+
+LEARN MORE
+  `invideo <command> <subcommand> --help` for a command's flags; `invideo help <topic>` for a topic.
+```
 
 <details>
 <summary>Every command and subcommand, from <code>--help</code></summary>
