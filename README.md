@@ -21,6 +21,65 @@ SOC 2 and GDPR compliant, ISO aligned.
 
 [![release](https://img.shields.io/github/v/release/invideoio/cli?label=release&color=F7F5F3&labelColor=161616)](https://github.com/invideoio/cli/releases/latest)
 
+## Install
+
+One native binary, no runtime to install: npm and pip only deliver it. It runs
+on macOS (Apple silicon and Intel), Linux (x64 and arm64) and Windows (x64).
+
+Use the install script unless you have a reason not to. On macOS and Linux:
+
+```sh
+curl -fsSL https://agents.invideo.io | sh
+```
+
+On Windows, in PowerShell:
+
+```powershell
+irm https://raw.githubusercontent.com/invideoio/cli/main/install.ps1 | iex
+```
+
+The script downloads the release for your platform, checks its sha256 against
+the one published with it, and installs one file: `~/.local/bin/invideo`, or
+`%LOCALAPPDATA%\invideo\bin\invideo.exe` on Windows. It needs no sudo.
+`INVIDEO_INSTALL_DIR` picks another folder and `INVIDEO_VERSION` another
+release. If the folder isn't on your `PATH`, the script says so. Read
+[install.sh](install.sh) or [install.ps1](install.ps1) first if you like.
+
+Other ways deliver the same binary. Use one when the script can't run:
+
+Homebrew:
+
+```sh
+brew install invideoio/tap/invideo
+```
+
+npm, cross-platform (incl. Windows):
+
+```sh
+npm install -g invideo
+npx invideo                   # without installing
+```
+
+Python (uv, pipx or pip):
+
+```sh
+uv tool install invideo
+pipx install invideo
+pip install invideo
+```
+
+- Homebrew fails with "Permission denied" when its taps are read-only. Use the
+  script.
+- npm fails with `EACCES` or a read-only error when its global folder isn't
+  writable. Add `--prefix ~/.local`, or use the script.
+
+Check the install with `invideo version`.
+
+Agents: run the install script yourself, after the person says yes once. Use
+another way only if it fails.
+
+## Commands
+
 ```text
 ❯ invideo
 Work with invideo from the command line.
@@ -64,44 +123,6 @@ EXAMPLES
 LEARN MORE
   `invideo <command> <subcommand> --help` for a command's flags; `invideo help <topic>` for a topic.
 ```
-
-## Install
-
-One native binary, no runtime to install: npm and pip only deliver it. It runs
-on macOS (Apple silicon and Intel), Linux (x64 and arm64) and Windows (x64).
-
-macOS and Linux:
-
-```sh
-curl -fsSL https://agents.invideo.io | sh
-```
-
-Homebrew:
-
-```sh
-brew install invideoio/tap/invideo
-```
-
-Windows, or anywhere with Node (npm, or without installing):
-
-```sh
-npm install -g invideo
-npx invideo
-```
-
-Python (uv, pipx or pip):
-
-```sh
-uv tool install invideo
-pipx install invideo
-pip install invideo
-```
-
-The install script downloads the release for your platform and checks its
-sha256 against the one published with it before installing; read
-[install.sh](install.sh) first if you like.
-
-## Commands
 
 <details>
 <summary>Every command and subcommand, from <code>--help</code></summary>

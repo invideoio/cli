@@ -6,7 +6,10 @@ facts from the binary itself.
 
 ## Setup
 
-- Install: see [README](README.md). `invideo version` prints the version.
+- Install: `curl -fsSL https://agents.invideo.io | sh` on macOS and Linux. It
+  needs no sudo and writes only `~/.local/bin/invideo`. Windows and the other
+  ways are in the [README](README.md#install). `invideo version` prints the
+  version.
 - Sign in once, as the person: `invideo auth login`. With no browser,
   `INVIDEO_NO_BROWSER=1 invideo auth login` prints a link and a code to enter on
   another device. `invideo auth status` says who is signed in.
