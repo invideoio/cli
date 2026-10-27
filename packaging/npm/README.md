@@ -4,7 +4,7 @@ invideo is a professional video editor you can drive from the terminal or your
 agent, with 250+ AI models for images, video, voice and music.
 
 ```sh
-npm install -g invideo     # or: npx invideo
+npm install -g invideo     # or: npx invideo@latest
 invideo auth login
 invideo project list
 ```
