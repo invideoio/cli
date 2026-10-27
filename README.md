@@ -57,7 +57,7 @@ npm, cross-platform (incl. Windows):
 
 ```sh
 npm install -g invideo
-npx invideo@latest            # without installing; @latest, or npx may run an old copy it kept
+npx invideo@latest            # without installing
 ```
 
 Python (uv, pipx or pip):
