@@ -141,14 +141,16 @@ Generating: `gen models <project-url> --query "lip sync" --json` finds a model,
 ## What mutates and what spends
 
 Safe to run freely: every `show`, `list`, `catalog`, `inspect`, `check`,
-`capture`, `probe`, `grab`, `filmstrip`, `waveform`, `search`, `status`, `models`,
-`model`, `inbox`, and any `--dry-run`.
+`capture`, `media metadata`, `media video.frames`, `media audio.waveform`,
+`search`, `status`, `models`, `model`, `inbox`, and any `--dry-run`.
 
 Changes the project: `edit change`, `edit new`, `branch *`, `asset upload`,
 `asset add`, `context write`, `context edit`, `notebook new-page`, `notebook
 mark`, `export *`, `agent register`, `agent message`, `project new`, `rename`.
 
-Spends the person's credits: `gen run`, `edit export`, `asset add --stock`.
+Spends the person's credits: `gen run`, `edit export`, `asset add --stock`,
+`media audio.transcript` (about 1 credit per hour of audio; a file already
+transcribed is free).
 Cap `gen run` with `--max-credits`.
 
 ## Working with other agents

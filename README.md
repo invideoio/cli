@@ -179,14 +179,16 @@ branch  An edit's checkpoints and branches
   branch default <url>         Make a branch the default
   branch final <url>           Declare a branch final
 
-asset  The project's files: upload, add, look at
+asset  The project's files: upload and add
   asset upload <url>           Upload local files into a project
   asset add <url>              Bring in media from a link or the stock library
   asset show <url>             A project's files, a folder or a file
-  asset probe <url>            What a file is: streams, duration, size
-  asset grab <url>             Frames of a file at given times
-  asset filmstrip <url>        A filmstrip of a file
-  asset waveform <url>         A file's audio levels
+
+media  One media file: details, frames, waveform, transcript
+  media metadata <url>         What a file is: streams, duration, size
+  media video.frames <url>     Frames of a file at given times
+  media audio.waveform <url>   A file's audio levels
+  media audio.transcript <url> Its words with timings and speakers
 
 gen  Generate with a model
   gen models <url>             Models you can generate with
@@ -303,8 +305,8 @@ Each agent takes a name with `invideo agent register` and sends with
   `gen models --query "lip sync"` finds one, `gen model --model <id>` lists its
   inputs, `gen run <page-url> --model <id> -i prompt="…" --max-credits 50`
   runs it; `--dry-run` prices it first.
-- **See what you made.** `asset grab`, `filmstrip` and `waveform` look inside
-  any file.
+- **See what you made.** `media video.frames`, `audio.waveform` and
+  `audio.transcript` look inside any file.
 - **Stock built in.** `library search` finds video, images, music and voices.
 - **Branches and checkpoints.** `branch new` tries a cut on its own branch,
   `branch checkpoint` saves it, `branch restore` goes back, `branch final`
