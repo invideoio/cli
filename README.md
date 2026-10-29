@@ -181,14 +181,21 @@ branch  An edit's checkpoints and branches
 
 asset  The project's files: upload and add
   asset upload <url>           Upload local files into a project
-  asset add <url>              Bring in media from a link or the stock library
+  asset add <url>              Bring in media or a document from a link or the stock library
   asset show <url>             A project's files, a folder or a file
 
-media  One media file: details, frames, waveform, transcript
+media  One media file: read it, transcribe it, or make a new file from it
   media metadata <url>         What a file is: streams, duration, size
   media video.frames <url>     Frames of a file at given times
-  media audio.waveform <url>   A file's audio levels
+  media audio.waveform <url>   A file's audio levels; also audio.loudness, audio.content,
+                               audio.onsets, audio.markers, audio.key, audio.sections
+                               and audio.beats
   media audio.transcript <url> Its words with timings and speakers
+  media document.pages <url>   An image sequence of each page of a PDF or deck
+  media video.upscale <url>    A new file from this one; also audio.separate, audio.clean,
+                               image.upscale, the removeBackground ops, and free tools
+                               like video.trim and image.crop (`invideo media --help`
+                               lists them all)
 
 gen  Generate with a model
   gen models <url>             Models you can generate with
@@ -305,8 +312,9 @@ Each agent takes a name with `invideo agent register` and sends with
   `gen models --query "lip sync"` finds one, `gen model --model <id>` lists its
   inputs, `gen run <page-url> --model <id> -i prompt="…" --max-credits 50`
   runs it; `--dry-run` prices it first.
-- **See what you made.** `media video.frames`, `audio.waveform` and
-  `audio.transcript` look inside any file.
+- **Work on any file.** `media` reads a file's frames, sound and words, splits a
+  PDF or deck into pages, and makes new files from it: upscaled, trimmed,
+  cropped, without its background, and more.
 - **Stock built in.** `library search` finds video, images, music and voices.
 - **Branches and checkpoints.** `branch new` tries a cut on its own branch,
   `branch checkpoint` saves it, `branch restore` goes back, `branch final`
