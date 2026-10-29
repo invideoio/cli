@@ -141,15 +141,23 @@ Generating: `gen models <project-url> --query "lip sync" --json` finds a model,
 ## What mutates and what spends
 
 Safe to run freely: every `show`, `list`, `catalog`, `inspect`, `check`,
-`capture`, `probe`, `grab`, `filmstrip`, `waveform`, `search`, `status`, `models`,
-`model`, `inbox`, and any `--dry-run`.
+`capture`, `media metadata`, `media video.frames`, the `media audio.*` reads
+(all but `audio.transcript`), `search`, `status`, `models`, `model`, `inbox`,
+and any `--dry-run`.
 
 Changes the project: `edit change`, `edit new`, `branch *`, `asset upload`,
 `asset add`, `context write`, `context edit`, `notebook new-page`, `notebook
-mark`, `export *`, `agent register`, `agent message`, `project new`, `rename`.
+mark`, `export *`, `agent register`, `agent message`, `project new`, `rename`,
+`media document.pages`, and every `media` command that makes a new file.
 
-Spends the person's credits: `gen run`, `edit export`, `asset add --stock`.
-Cap `gen run` with `--max-credits`.
+Spends the person's credits: `gen run`, `edit export`, `asset add --stock`,
+`media audio.transcript` (priced by the file's length; reading a transcript
+already made is free), and the `media` commands that run a model
+(`audio.separate`, `audio.clean`, `video.upscale`, `image.upscale`,
+`video.removeBackground`, `image.removeBackground`). The other `media`
+commands that make a file, like `video.trim`, are free.
+Cap `gen run` and those `media` commands with `--max-credits`; `--dry-run`
+prices them first.
 
 ## Working with other agents
 
