@@ -10,17 +10,18 @@ facts from the binary itself.
   needs no sudo and writes only `~/.local/bin/invideo`. Windows and the other
   ways are in the [README](README.md#install). `invideo version` prints the
   version.
-- Sign in once, as the person: `invideo auth login`. With no browser,
-  `INVIDEO_NO_BROWSER=1 invideo auth login` prints a link and a code to enter on
-  another device. `invideo auth status` says who is signed in.
+- Sign in once, as the person: `invideo auth login`. With no browser (over ssh,
+  in a container, on Linux with no desktop) it prints a link and a code to enter
+  on another device; `INVIDEO_NO_BROWSER=1` asks for that anywhere.
+  `invideo auth status` says who is signed in.
 - The sign-in lives in the system credential store. Nothing else is stored.
 
 ## The five rules
 
-1. **`--json` on every command.** To a terminal, an answer is `key: value` text;
-   piped, it is tab-separated rows with the rest on stderr. `--json` is the one
-   shape that never changes: one object on stdout, errors as one object on
-   stderr.
+1. **`--json` on every command.** Without it an answer is `key: value` text, on
+   a terminal or in a pipe; `--tsv` gives a list as tab-separated rows with the
+   rest on stderr. `--json` is one object on stdout, and a refusal is one object
+   on stderr. A usage error (exit 2) is plain text on stderr.
 2. **Read, then change, with the token.** `edit show` answers a `state_token`.
    Every change (`edit change`, `branch checkpoint`, `branch restore`,
    `branch new`, `branch final`) takes it as `--token`. A stale token is refused
@@ -30,10 +31,12 @@ facts from the binary itself.
    applying them. `gen run --dry-run` prices a generation and checks its inputs;
    nothing starts. `gen run --max-credits <n>` refuses to start when the
    estimate is higher.
-4. **Jobs answer a URL; follow it.** Generations, exports and uploads answer at
-   once. `invideo status <url> … --wait` checks back until they are over
-   (`--timeout <s>`, 30 minutes by default). `--out <dir>` saves the files an
-   answer links to.
+4. **Jobs answer a URL; follow it.** Generations and exports answer at once, with
+   what they make in `.sequences`. `invideo status <url> … --wait` checks back
+   until they are over (`--timeout <s>`, 30 minutes by default, then exit 10; the
+   job goes on). Only `status` takes `--wait`; any other command refuses it.
+   Then `invideo notebook show <url> --out <dir>` saves the files; `status`
+   gives none.
 5. **Take a name.** In a project, `invideo agent register --name scout` once,
    then `--as scout` on every command there, or `export INVIDEO_AS=scout`.
    Unnamed commands act as `invideo-cli-<username>`, which every unnamed command
@@ -67,12 +70,14 @@ An error is one object on stderr:
 | 4 | not signed in | `invideo auth login` |
 | 5 | a limit: credits or quota | stop; tell the person |
 | 6 | held by moderation | stop; tell the person |
-| 7 | transient: nothing ran | run the same command again; with `--wait` the CLI retries itself |
+| 7 | transient: nothing ran | run the same command again; `status --wait` retries itself |
 | 8 | needs the person's confirmation | stop; ask |
 | 9 | update required | `invideo update`, then run it again |
+| 10 | `--wait` ran out of `--timeout` | the job goes on: `status` again |
 
-A retry after 7 is the same request, so it never starts anything twice.
-`--idempotency-key <text>` on `gen run` and `edit export` makes any repeat safe.
+Nothing ran after a 7, so running it again never starts anything twice.
+`--idempotency-key <text>` on `gen run`, `edit export` and the `media` commands
+that make a file makes any repeat safe.
 
 ## Arguments
 
@@ -112,10 +117,10 @@ invideo project new --title "Launch teaser" --json                 # .url
 invideo agent register <project-url> --name scout --json
 export INVIDEO_AS=scout
 
-invideo asset upload <project-url> ./shots/*.mp4 --json            # answers upload URLs
+invideo asset upload <project-url> ./shots/*.mp4 --json            # .url of each file
 invideo status <upload-url> --wait --json
 
-invideo edit new <project-url> --name "Teaser v1" --json           # .url
+invideo edit new <project-url> --name "Teaser v1" --json           # .url; exit 7 while the project opens: run it again
 invideo edit show <edit-url> --json                                # .state_token, .timeline_id, .objects
 invideo edit catalog <edit-url> --ops trim_clip,add_transition --json
 invideo edit change <edit-url> --timeline T1 --token <state_token> --operations @ops.json --dry-run --json
@@ -124,8 +129,9 @@ invideo edit check <edit-url> --json                               # .ok, .findi
 invideo edit capture <edit-url> --at 1,3.5 --out ./frames --json
 invideo branch checkpoint <edit-url> --title "rough cut" --token <state_token> --json
 
-invideo edit export <edit-url> --format video --quality 1080 --json   # .url
-invideo status <export-url> --wait --out . --json
+invideo edit export <edit-url> --format video --quality 1080 --json   # .sequences[0]
+invideo status <export-url> --wait --json
+invideo notebook show <export-url> --out . --json                  # .files
 ```
 
 Reading a big edit: `edit show` reads a window (`--mode window --start-seconds
@@ -135,8 +141,9 @@ Reading a big edit: `edit show` reads a window (`--mode window --start-seconds
 
 Generating: `gen models <project-url> --query "lip sync" --json` finds a model,
 `gen model <project-url> --model <id> --json` lists its inputs, then
-`gen run <page-url> --model <id> -i prompt="…" --max-credits 50 --json` and
-`status <sequence-url> --wait --out . --json`.
+`gen run <page-url> --model <id> -i prompt="…" --max-credits 50 --json`, then
+`status <sequence-url> --wait --json` and
+`notebook show <sequence-url> --out . --json`.
 
 ## What mutates and what spends
 
@@ -150,14 +157,15 @@ Changes the project: `edit change`, `edit new`, `branch *`, `asset upload`,
 mark`, `export *`, `agent register`, `agent message`, `project new`, `rename`,
 `media document.pages`, and every `media` command that makes a new file.
 
-Spends the person's credits: `gen run`, `edit export`, `asset add --stock`,
-`media audio.transcript` (priced by the file's length; reading a transcript
-already made is free), and the `media` commands that run a model
+Spends the person's credits: `gen run`, `asset add --stock`,
+`media audio.transcript` and `media describe` (priced by the file's length;
+reading one already made is free), `media ask`, and the `media` commands that
+run a model
 (`audio.separate`, `audio.clean`, `video.upscale`, `image.upscale`,
 `video.removeBackground`, `image.removeBackground`). The other `media`
 commands that make a file, like `video.trim`, are free.
 Cap `gen run` and those `media` commands with `--max-credits`; `--dry-run`
-prices them first.
+prices them first. `edit export` is free, and changes the project.
 
 ## Working with other agents
 

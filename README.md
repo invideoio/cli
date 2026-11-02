@@ -97,7 +97,8 @@ PROJECT COMMANDS
   context:    The project's entries and briefs
   edit:       Read, change, capture and export an edit
   branch:     An edit's checkpoints and branches
-  asset:      The project's files: upload, add, look at
+  asset:      The project's files: upload and add
+  media:      One media file: details, frames, waveform, transcript
   gen:        Generate with a model
   export:     Export pages
   agent:      Agents in a project and their messages
@@ -138,8 +139,8 @@ workspace  Your workspaces
   workspace list               Your workspaces
 
 project  List, create, show and rename projects
-  project list <url>           Your projects, newest first
-  project new <url>            Start a project
+  project list [<url>]         Your projects, newest first
+  project new [<url>]          Start a project
   project show <url>           A project: its notebook, context, briefs and newest files
   project rename <url>         Rename what a URL names
 
@@ -191,6 +192,8 @@ media  One media file: read it, transcribe it, or make a new file from it
                                audio.onsets, audio.markers, audio.key, audio.sections
                                and audio.beats
   media audio.transcript <url> Its words with timings and speakers
+  media describe <url>         What a video holds: a summary, chapters and captions
+  media ask <url>              A question about up to a minute of a video
   media document.pages <url>   An image sequence of each page of a PDF or deck
   media video.upscale <url>    A new file from this one; also audio.separate, audio.clean,
                                image.upscale, the removeBackground ops, and free tools
@@ -243,13 +246,16 @@ invideo edit show <edit-url> --json                          # tracks, clips, st
 invideo edit change <edit-url> --timeline T1 --token <state_token> --operations @ops.json
 invideo edit check <edit-url>
 invideo edit capture <edit-url> --at 1,3.5 --out ./frames
-invideo edit export <edit-url> --format video --quality 1080 # answers the export's URL
-invideo status <export-url> --wait --out .
+invideo edit export <edit-url> --format video --quality 1080 # answers the export's URL at once
+invideo status <export-url> --wait                           # until it is over
+invideo notebook show <export-url> --out .                   # saves the file
 ```
 
 Every answer gives the URLs to use next, and each one opens in invideo Editor.
-Signing in on a machine with no browser: `INVIDEO_NO_BROWSER=1 invideo auth login`
-prints a link and a code to enter on another device.
+A new project takes a moment to open: if `edit new` exits 7, run it again.
+Signing in on a machine with no browser (over ssh, in a container, on Linux with
+no desktop) prints a link and a code to enter on another device;
+`INVIDEO_NO_BROWSER=1` asks for that anywhere.
 
 ## A real timeline, from a terminal
 
@@ -325,8 +331,9 @@ Each agent takes a name with `invideo agent register` and sends with
 | Flag | What it does |
 | --- | --- |
 | `--json` | The answer as JSON on stdout |
-| `--wait` | Wait for a generation, export or upload to finish |
-| `--timeout <s>` | Stop waiting after s seconds (30 minutes by default) |
+| `--tsv` | A list as tab-separated rows; the rest goes to stderr |
+| `--wait` | With `status`: check back until the jobs are over. Any other command refuses it |
+| `--timeout <s>` | Stop waiting after s seconds (30 minutes by default) and exit 10; the job goes on |
 | `--out <dir>` | Download the files an answer links to (captures, frames, generated media, exports) into dir |
 | `--as <name>` | The name an agent registered in the project |
 | `--help` | Help for any command |
@@ -350,13 +357,13 @@ rules, in short; [AGENTS.md](AGENTS.md) has the whole contract, ready to paste
 into your own agent instructions.
 
 - Pass `--json` on every command. The answer is one object on stdout, with
-  `next` (what to run now) and `notice`; errors are one object on stderr with
-  `code` and `message`.
+  `next` (what to run now) and `notice`; a refusal is one object on stderr with
+  `code` and `message`. A usage error (exit 2) is plain text on stderr.
 - `edit show` answers a `state_token`; pass it as `--token` on every change.
   Exit 3 means it went stale: read again.
 - `--dry-run` before `edit change` and `gen run`; `--max-credits` on `gen run`.
 - Anything that starts a job answers at once with a URL: `status <url> --wait`
-  follows it, and `--out <dir>` saves what it made.
+  follows it, then `notebook show <url> --out <dir>` saves what it made.
 - In a project, register a name (`invideo agent register --name scout`) and pass
   `--as scout`, or set `INVIDEO_AS`. Unnamed commands act as
   `invideo-cli-<username>`. People watching see who did what.
@@ -374,6 +381,7 @@ into your own agent instructions.
 | 7 | transient: nothing ran | run the same command again |
 | 8 | needs the person's confirmation | stop; ask |
 | 9 | update required | `invideo update`, then again |
+| 10 | `--wait` ran out of `--timeout` | the job goes on: `status` again |
 
 ## Update and uninstall
 
