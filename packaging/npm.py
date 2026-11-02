@@ -41,12 +41,13 @@ def binary(archive):
 def write(directory, manifest):
     directory.mkdir(parents=True)
     (directory / "package.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    shutil.copy(HERE.parent / "LICENSE", directory / "LICENSE")
 
 
 def main(version, dist, out):
     dist, out = Path(dist), Path(out)
     shutil.rmtree(out, ignore_errors=True)
-    common = {"version": version, "description": DESCRIPTION, "homepage": "https://github.com/invideoio/cli", "repository": REPOSITORY}
+    common = {"version": version, "description": DESCRIPTION, "license": "Apache-2.0", "homepage": "https://github.com/invideoio/cli", "repository": REPOSITORY}
 
     for name, (target, os, cpu) in PLATFORMS.items():
         directory = out / name.replace("/", "__")

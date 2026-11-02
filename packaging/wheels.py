@@ -56,10 +56,12 @@ def wheel(version, target, archive, readme, out):
             f"Version: {version}\n"
             f"Summary: {SUMMARY}\n"
             "Home-page: https://github.com/invideoio/cli\n"
+            "License: Apache-2.0\n"
             "Project-URL: Source, https://github.com/invideoio/cli\n"
             "Description-Content-Type: text/markdown\n"
             "\n" + readme
         ).encode(),
+        f"{info}/LICENSE": (Path(__file__).parent.parent / "LICENSE").read_bytes(),
         f"{info}/WHEEL": (
             "Wheel-Version: 1.0\nGenerator: invideo-release\nRoot-Is-Purelib: false\n"
             + "".join(f"Tag: py3-none-{tag}\n" for tag in tags)
