@@ -14,6 +14,9 @@ facts from the binary itself.
   in a container, on Linux with no desktop) it prints a link and a code to enter
   on another device; `INVIDEO_NO_BROWSER=1` asks for that anywhere.
   `invideo auth status` says who is signed in.
+- Docs: every command and flag at https://docs.invideo.io/reference/cli, a
+  page per job at https://docs.invideo.io (index: https://docs.invideo.io/llms.txt;
+  a page's markdown is its URL plus `.md`).
 - The sign-in lives in the system credential store. Nothing else is stored.
 
 ## The five rules
@@ -69,7 +72,7 @@ An error is one object on stderr:
 | 3 | conflict: the edit changed since your read | `edit show` again, rebuild the change |
 | 4 | not signed in | `invideo auth login` |
 | 5 | a limit: credits or quota | stop; tell the person |
-| 6 | held by moderation | stop; tell the person |
+| 6 | held by moderation: a safety review, not a refusal | wait; `status <url>` again; do not resend. If it ends `failed`, change the input it flagged |
 | 7 | transient: nothing ran | run the same command again; `status --wait` retries itself |
 | 8 | needs the person's confirmation | stop; ask |
 | 9 | update required | `invideo update`, then run it again |
