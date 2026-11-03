@@ -350,11 +350,18 @@ CLI is for shells, scripts and coding agents that run commands and want files on
 disk. Agents can read [agents.md](https://mcp.invideo.io/mcp/agents.md) for
 either.
 
+The docs are at [docs.invideo.io](https://docs.invideo.io): a start page per
+client, a page per job with the exact commands, and the
+[CLI reference](https://docs.invideo.io/reference/cli) with every command and
+flag. [llms.txt](https://docs.invideo.io/llms.txt) lists every page, and a
+page's markdown is its URL plus `.md`.
+
 ## Agents
 
 Sign in once yourself, then let Claude Code, Codex or Cursor drive it. The
 rules, in short; [AGENTS.md](AGENTS.md) has the whole contract, ready to paste
-into your own agent instructions.
+into your own agent instructions. Setup per client, with the fixes for what
+goes wrong, is at [docs.invideo.io/agents](https://docs.invideo.io/agents).
 
 - Pass `--json` on every command. The answer is one object on stdout, with
   `next` (what to run now) and `notice`; a refusal is one object on stderr with
@@ -377,7 +384,7 @@ into your own agent instructions.
 | 3 | conflict: the edit changed since your read | `edit show` again, rebuild the change |
 | 4 | not signed in | `invideo auth login` |
 | 5 | a limit: credits or quota | stop; tell the person |
-| 6 | held by moderation | stop; tell the person |
+| 6 | held by moderation: a safety review, not a refusal | wait; `status <url>` again; do not resend. If it ends `failed`, change the input it flagged |
 | 7 | transient: nothing ran | run the same command again |
 | 8 | needs the person's confirmation | stop; ask |
 | 9 | update required | `invideo update`, then again |
