@@ -1,0 +1,22 @@
+{
+  "name": "@invideo-ai/edit",
+  "version": "1.0.0",
+  "description": "Type declarations for invideo public TypeScript edit scripts",
+  "types": "index.d.ts",
+  "files": [
+    "index.d.ts",
+    "README.md",
+    "AGENTS.md",
+    "LICENSE",
+    "examples"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/invideoio/cli.git",
+    "directory": "packages/edit"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

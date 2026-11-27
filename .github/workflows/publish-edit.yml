@@ -1,0 +1,36 @@
+name: Publish edit types
+on:
+  push:
+    tags: ["edit-v*"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  npm:
+    if: vars.NPM_EDIT == 'true'
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - name: Check tag version
+        run: |
+          node <<'JS'
+          const version = require('./packages/edit/package.json').version;
+          if (process.env.GITHUB_REF !== `refs/tags/edit-v${version}`) {
+            throw new Error(`Select tag edit-v${version}; tag must match package.json`);
+          }
+          JS
+      - run: npm install -g npm@11.21.1
+      - run: npm ci --ignore-scripts
+      - run: npm run check:edit
+      - run: npm run pack:edit
+      - name: Publish
+        working-directory: packages/edit
+        run: npm publish --access public --provenance
